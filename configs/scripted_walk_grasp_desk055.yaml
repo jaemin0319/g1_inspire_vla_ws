@@ -1,0 +1,75 @@
+# EXPERIMENTAL - DOES NOT WORK YET (0 successes, 2026-11-17). Automatic walk -> grasp -> lift for the 0.55 m desk.
+# Walking works (stand error ~1-2 cm, no corrections), the grasp does not:
+#   * The official wholebody policy keeps the pelvis at 0.789 m (its height command is ignored for 0.30-0.80, measured),
+#     so the object centre is 0.18 m below the pelvis. With a level hand the official IK reaches R_ee only down to
+#     ~-0.05 m (logs/checks/auto_walk_grasp/reach_scan_*.txt): the fingers must point >= ~35 deg down.
+#   * With the hand pitched 35-40 deg the cylinder axis is tilted in the hand frame; the RH56E2 thumb (on the index
+#     side, +z of R_ee) then lands on the cylinder top and the closing fingers push the cylinder out (wrist camera,
+#     docs/AUTO_WALK_GRASP.md). Tried: pitch 25-40 deg, grasp heights, hand-frame offsets, 5 thumb close presets.
+# Working plans: configs/scripted_walk_grasp_desk065.yaml (0.65 m), configs/scripted_walk_grasp_desk070.yaml (0.70 m).
+# Scripted expert with simulator ground truth (source=scripted).
+side: right
+desk_top_z: 0.55                    # checked against the object's resting height before the arm moves
+object_half_height: 0.06
+grasp_rpy_deg: [0.0, 35.0, 0.0]     # R_ee in the pelvis frame: fingers forward, pitched 35 deg down, palm facing left
+offsets_frame: hand                 # offsets below are in that rotated hand frame (object keeps its place in the palm)
+grasp_point_dz: 0.03                # grasp 3 cm above the cylinder centre (open fingertips stay ~2 cm above the desk)
+raise_dx: -0.04
+raise_z: 0.06
+pregrasp_offset: [-0.170, -0.130, 0.005]
+grasp_offset: [-0.170, -0.060, 0.005]
+lift_height: 0.10
+t_raise: 3.0
+t_pregrasp: 3.0
+t_approach: 2.0
+t_close: 1.2
+t_lift: 2.0
+t_hold: 2.0
+success_lift_m: 0.05
+servo_approach: true
+servo_gain: 2.0
+servo_limit_m: 0.04
+servo_tol_m: 0.005
+servo_settle_max_s: 2.0
+
+walk:
+  stand_rel: [0.28, -0.08]          # object position in the robot (pelvis) frame at the stand pose, metres
+  goal_yaw_deg: 0.0                 # world yaw to face at the stand pose (0 = square to the desk front)
+  start_delay_s: 1.0                # stand still first (recording starts here)
+  vx_walk: 0.5                      # forward command while walking (|vx| < ~0.3 does not step)
+  lateral_mode: holonomic           # holonomic: keep facing goal_yaw, sideways component removes the cross error
+                                    # (in-place turns are unreliable, so do not let the heading wander); stanley: steer
+  k_lat: 3.0                        # holonomic: vy = -k_lat * cross error (1/s)
+  vy_walk_max: 0.5
+  wz_walk_max: 0.8                  # yaw-rate command limit while walking (steering works while stepping)
+  k_cross: 2.5                      # stanley only, 1/m
+  k_yaw: 2.0                        # 1/s
+  ramp_s: 0.3
+  stop_dist_m: 0.10                 # stop commanding this far before the stand pose (policy coasts ~0.09 m)
+  settle_s: 1.0
+  tol_along_m: 0.04                 # robot-frame object position vs stand_rel
+  tol_cross_m: 0.04
+  tol_yaw_deg: 12.0
+  max_corrections: 3
+  correction: reapproach            # reapproach: back off backoff_s at -vx_back, then walk in again (short
+                                    # single-axis pulses do not make the policy step: it sways and returns);
+                                    # pulse: single-axis pulses (kept for experiments)
+  backoff_s: 1.0
+  pre_walk_s: 0.6
+  timeout_s: 40.0                   # sim seconds for the whole walking part
+  pulse:                            # corrective pulses (measured responses, see sources.py _plan_pulse)
+    vx_fwd: 0.5
+    fwd_speed: 0.23
+    fwd_coast_m: 0.09
+    vx_back: 0.6
+    back_speed: 0.2
+    back_coast_m: 0.05
+    vy: 0.5
+    lat_speed: 0.13
+    lat_coast_m: 0.05
+    wz: 1.57
+    yaw_rate: 0.2                   # rad/s actually reached (measured: 0.8 s at 1.57 -> ~11 deg, sometimes no step)
+    yaw_min_s: 0.8
+
+# Only the RH56E2 hand geometry is tuned here (configs/hands_inspire.yaml hand_models.rh56e2 presets).
+hand_models: {}

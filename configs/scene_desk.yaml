@@ -1,0 +1,140 @@
+# Scene for task G1IV-Desk-Cylinder-G129-Inspire-Wholebody (src/g1iv_sim/desk_task.py).
+# Units: metres, kilograms, degrees (yaw). World frame: +x forward of the robot's start pose, +z up.
+# Everything here is read once at sim start-up; edit and restart scripts/run_sim.sh.
+
+seed: 42                      # placement noise seed (episode i uses seed + i)
+
+robot:
+  # Body: official G1 29-DoF rev 1.0 wholebody articulation (assets/robots/g1-29dof_wholebody_inspire) = the G1 EDU Plus
+  # body (3-DoF waist, 7-DoF arms); kept for the newer G1 hardware revisions, see docs/HAND_RH56E2.md section 5.
+  # Hands: rh56e2 = Inspire RH56E2 / RH56DFTP (configs/hand_rh56e2.yaml, docs/HAND_RH56E2.md);
+  #        inspire_dfx_official = the hand of Unitree's official asset (then hand_appearance below applies).
+  hand_model: rh56e2
+  hand_colorway: dftp         # rh56e2 only: dftp (white shells, black tips) | e2_black (black fingers)
+  init_pos: [0.0, 0.0, 0.80]  # pelvis start; z=0.80 is the official wholebody value
+  init_yaw_deg: 0.0
+  reset_noise_xy: [0.0, 0.0]  # uniform +/- range applied at reset (for stop-pose experiments later)
+  reset_noise_yaw_deg: 0.0
+  debug_fix_base: false       # true = DEBUG ONLY: pin the pelvis (never use for walking/recording)
+
+hand_appearance:
+  # Only for robot.hand_model = inspire_dfx_official (the RH56E2 hands carry their own colours, hand_colorway).
+  # The official asset renders both Inspire hands almost white (its material "material_191919" is
+  # diffuse 0.93/0.90/0.90). This re-colours the hand links at start-up to resemble the real Inspire RH56 hand
+  # (white segments + back cover, black fingertips and thumb base, metal thumb links). Visual only: physics,
+  # the USD file and the rest of the robot are untouched. Set enabled: false for the official look.
+  enabled: true
+  colors:                     # name: [r, g, b, metallic, roughness]
+    white: [0.90, 0.90, 0.90, 0.0, 0.45]
+    black: [0.03, 0.03, 0.03, 0.0, 0.40]
+    silver: [0.72, 0.72, 0.75, 1.0, 0.30]
+  links:                      # link name without the L_/R_ (or left_/right_) prefix -> colour
+    hand_base_link: white
+    index_proximal: white
+    middle_proximal: white
+    ring_proximal: white
+    pinky_proximal: white
+    index_intermediate: black
+    middle_intermediate: black
+    ring_intermediate: black
+    pinky_intermediate: black
+    thumb_proximal_base: black
+    thumb_proximal: silver
+    thumb_intermediate: silver
+    thumb_distal: black
+
+desk:
+  # User request "1500x70x70" interpreted as width 1500 mm x depth 700 mm x top-surface height 700 mm;
+  # 2026-11-17 user request: top lowered by 150 mm to 550 mm (old value: --scene-set desk.top_surface_height=0.70).
+  width: 1.50                 # along world y (left-right as seen by the robot)
+  depth: 0.70                 # along world x (towards the robot)
+  top_surface_height: 0.55    # floor to the UPPER face of the top
+  top_thickness: 0.04
+  leg_size: 0.05              # square legs
+  leg_inset: 0.04             # leg outer face distance from the top edge
+  center_xy: [1.25, 0.0]      # desk centre; near edge is at center_x - depth/2
+  yaw_deg: 0.0
+  color: [0.92, 0.92, 0.90]   # white, matte
+  roughness: 0.85
+  metallic: 0.0
+  static_friction: 0.8
+  dynamic_friction: 0.8
+
+floor:
+  # Real collider + render material (not a background colour). No default grid ground is spawned.
+  size_xy: [20.0, 20.0]
+  thickness: 0.10             # top face at z = 0
+  color: [0.02, 0.02, 0.02]   # black, near-matte
+  roughness: 0.95
+  specular_reflection: false  # false = no sky reflection at grazing angles (with it, the far floor renders grey)
+  metallic: 0.0
+  static_friction: 1.0        # matches the official wholebody task global material
+  dynamic_friction: 1.0
+
+object:
+  name: cylinder
+  radius: 0.030               # 60 mm diameter: inside the Inspire power-grasp range
+  height: 0.120
+  mass: 0.15
+  xy: [1.02, -0.20]           # on the desk, 0.12 m in from the near edge, right-hand side
+  color: [0.85, 0.25, 0.15]   # red-orange, visible on white desk and black floor
+  static_friction: 1.0
+  dynamic_friction: 1.0
+  restitution: 0.0
+  reset_noise_xy: [0.0, 0.0]
+
+extra_objects:
+  # 2026-11-18 user request: blue and green cylinders next to the red one (language-conditioned picking), all at fixed
+  # positions. Same shape/mass/friction as object: above; at most 2 (scene entities object_1, object_2).
+  # The target is chosen per reset (ctl reset --target blue); the simulator then reports the TARGET as
+  # eval object_pos_w / object_lift_m / contact_force_total and every cylinder under eval objects.
+  # enabled: false = the single red cylinder of the earlier datasets.
+  enabled: true
+  primary_name: red           # colour name of object: above (the default target)
+  items:                      # 0.25 m apart along y; the right hand approaches the target from its -y side
+    - {name: blue, xy: [1.02, 0.05], color: [0.12, 0.32, 0.85]}
+    - {name: green, xy: [1.02, -0.45], color: [0.15, 0.60, 0.22]}
+
+lights:
+  dome:
+    intensity: 1200.0
+    color: [1.0, 1.0, 1.0]
+  distant:                    # sun-like key light for shading on a black floor
+    intensity: 2500.0
+    color: [1.0, 0.98, 0.95]
+    angle_deg: 1.0
+    rpy_deg: [0.0, 45.0, -30.0]
+
+# Walls / ceiling: none. The official wholebody scene's small_warehouse USD and both packing tables
+# are removed from the scene config (no prim, no collider).
+remove_official_props: [room_walls, packing_table1, packing_table2]
+
+cameras:
+  # Policy/recording cameras: poses, intrinsics, lens model and hardware come from configs/camera_rig.yaml
+  # (docs/CAMERA_RIG.md); here only the update period / depth option. use_rig: false -> official presets (mono head).
+  policy: [front_camera, front_right_camera, left_wrist_camera, right_wrist_camera]
+  width: 640
+  height: 480
+  update_period: 0.02         # 50 Hz sim time = every control step
+  image_server_stream: true   # official camera_image observation term -> official image server (PICO headset video)
+  depth: false                # true adds distance_to_image_plane (float32 m) to the head camera
+  # Demo mode (scripts/run_sim.sh --demo, see the demo: section) sets policy: [] and observer.sensor: false.
+  # External observer camera (viewport / preview only, never a policy input).
+  observer:
+    enabled: true
+    sensor: true              # false: viewport view only, no world_camera sensor (no extra 640x480 render product)
+    pos: [-0.6, -1.6, 1.6]
+    look_at: [1.0, 0.0, 0.7]
+
+# Demo mode = real-time viewing, no camera data, nothing to record: scripts/run_sim.sh --demo
+#   = cameras.policy=[] + cameras.observer.sensor=false + cameras.image_server_stream=false
+#     + demo.render_every_n_steps=2 + demo.realtime_pacing=true
+# --demo-cams keeps the four policy cameras for the GUI camera panel (update every 2nd step, panel every 4th step);
+#   measured slower than real time (docs/VALIDATION.md).
+# Camera rendering + read-back are ~78 % of a control step with the 4 policy cameras (docs/VALIDATION.md); without
+# camera sensors only physics (~5 ms), the policy and the viewport remain.
+demo:
+  render_every_n_steps: 1     # >1: viewport + cameras drawn every N-th control step (camera frames repeat -> recording refused)
+  realtime_pacing: false      # true: pace the loop at one 20 ms control step per 20 ms wall time on a cumulative
+                              # deadline (steps without rendering absorb the longer rendering steps); the launcher
+                              # then lifts the official per-step limiter (--step_hz 1000)

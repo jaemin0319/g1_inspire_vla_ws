@@ -1,0 +1,23 @@
+# Sim-side episode recorder (src/g1iv_sim/recorder.py), runs inside the simulator process so that
+# images, measured joints, applied targets and simulation time come from the SAME control step.
+
+# The wholebody locomotion policy runs at a fixed 50 Hz (physics 200 Hz, decimation 4) => frames can
+# only be taken on a 20 ms simulation-time grid. A uniform 30 Hz grid is impossible on it
+# (33.3 ms is not a multiple of 20 ms); 25 Hz (every 2nd step) is the closest uniform rate.
+record_every_n_steps: 2       # 2 -> 25 Hz sim time, 1 -> 50 Hz
+cameras: [front_camera, front_right_camera, left_wrist_camera, right_wrist_camera]   # absent cameras are skipped
+camera_aliases: {front_camera: head, front_right_camera: head_right, left_wrist_camera: left_wrist, right_wrist_camera: right_wrist}
+jpeg_quality: 95
+save_depth: false             # only if scene cameras.depth = true (uint16 PNG, millimetres)
+
+raw_root: data/raw            # human demonstrations (pico / keyboard)
+smoke_root: data/smoke        # mock / scripted test data (never called expert demonstrations)
+smoke_sources: [mock, scripted]
+
+teleop_meta_max_age_ms: 200   # older hub metadata is flagged stale in the frame
+writer_queue_max: 256         # frames waiting for disk; overflow => frame marked dropped (never silently)
+
+status_every_n_steps: 2       # rt/g1iv/sim_status rate (25 Hz)
+
+fall_height_m: 0.45           # pelvis z below this => fallen
+lift_success_height_m: 0.05   # object raised above its spawn height (evaluation label only)

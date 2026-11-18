@@ -1,0 +1,6 @@
+torch==2.7.0+cu128
+torchvision==0.22.0+cu128
+numpy<2
+pyarrow==21.0.0
+huggingface-hub<1.0
+pandas<3

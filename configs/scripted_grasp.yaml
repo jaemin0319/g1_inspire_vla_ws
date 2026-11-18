@@ -1,0 +1,48 @@
+# Scripted right-hand grasp used ONLY as a pipeline test (arm_source: scripted). Uses simulator ground
+# truth for the object position; data it produces goes to data/smoke and is labelled source=scripted.
+# Plan clock: SIMULATOR time (durations below are sim seconds).
+#
+# Geometry (tools/hand_geometry.py on the official wholebody Inspire USD, logs/checks/hand_geometry.txt): in the
+# official IK end-effector frame R_ee (= right_wrist_yaw_link + 0.05 m along x) the right Inspire hand has its
+# finger MCP joints at x ~ 0.128, fingers spread along z (index +0.03 .. pinky -0.03) and the thumb on +y,
+# i.e. the palm faces +y. With R_ee = identity in the pelvis/IK frame (fingers forward, right palm facing left)
+# a vertical cylinder is wrapped when its centre sits at about (0.08, 0.055, 0.0) in R_ee.
+side: right
+desk_top_z: 0.70                    # made for the 0.70 m desk (2026-11-11, robot reset in place); walking: configs/scripted_walk_grasp_desk*.yaml
+grasp_rpy_deg: [0.0, 0.0, 0.0]      # R_ee orientation in the pelvis/IK frame during the grasp
+# phase "raise": rotate from the hanging default orientation to grasp_rpy while lifting the hand BEHIND the desk
+# edge (fingers sweep forward without catching the desk front face / underside of the top)
+raise_dx: -0.04                     # R_ee x relative to its pose at engage (pelvis frame)
+raise_z: 0.06                       # R_ee z in the pelvis frame (desk top is ~-0.09 below the pelvis here)
+t_raise: 3.0
+pregrasp_offset: [-0.16, -0.090, -0.010]   # R_ee position - object centre (pelvis frame), fingers clear of the object
+grasp_offset: [-0.08, -0.058, -0.010]      # object centre at ~(0.08, 0.058, 0.01) in R_ee: inside the palm
+lift_height: 0.10
+t_pregrasp: 3.0
+t_approach: 2.0
+t_close: 1.2
+t_lift: 2.0
+t_hold: 2.0
+success_lift_m: 0.05
+
+# Per hand model (simulator status "hand_model", configs/scene_desk.yaml robot.hand_model): keys here override the
+# values above. The defaults above were made for the official DFX hand.
+hand_models:
+  rh56e2:
+    # Inspire RH56E2 (geometry: tools/cad/make_inspire_e2_hand.py, docs/HAND_RH56E2.md section 6). Hand presets of
+    # configs/hands_inspire.yaml hand_models.rh56e2 (thumb pre-rotated 0.91 rad). Hand-vs-cylinder check (60 mm):
+    # centred at (0.170, 0.060, -0.005) in R_ee it clears the open hand by 16 mm (15.8 mm along the approach) and
+    # the closed targets reach 10 mm (fingers) / 6.5 mm (thumb) into it from directions 119 deg apart. The approach
+    # is a straight move towards the palm (+y in R_ee) so arm tracking lag does not bring the thumb onto the object.
+    # The grasp point is 0.09 m further from the wrist than with the DFX hand: stand the robot ~0.08 m further back
+    # (record_episode.sh reset --robot-pose 0.62 -0.05 0) or the arm cannot pull the hand in close enough.
+    pregrasp_offset: [-0.170, -0.130, 0.005]
+    grasp_offset: [-0.170, -0.060, 0.005]
+    # The arm misses this point by 1-2 cm (IK residual + tracking lag; fingers ~7 deg down) and the E2 fingers then
+    # push the cylinder towards the wrist: close the loop on the measured hand position (ground truth, test only)
+    # and close the hand only once it is within servo_tol_m of the grasp point (or after servo_settle_max_s).
+    servo_approach: true
+    servo_gain: 2.0            # 1/s, integral gain on the hand-position error (pelvis frame)
+    servo_limit_m: 0.04
+    servo_tol_m: 0.005
+    servo_settle_max_s: 2.0

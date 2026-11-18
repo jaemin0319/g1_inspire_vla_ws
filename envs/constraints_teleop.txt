@@ -1,0 +1,3 @@
+numpy==1.26.4
+params-proto==2.13.2
+pyarrow==21.0.0

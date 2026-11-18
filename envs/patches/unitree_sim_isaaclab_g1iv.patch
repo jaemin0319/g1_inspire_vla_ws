@@ -1,0 +1,89 @@
+diff --git a/dds/dds_master.py b/dds/dds_master.py
+index 2e500dd..f6fc788 100644
+--- a/dds/dds_master.py
++++ b/dds/dds_master.py
+@@ -57,7 +57,10 @@ class DDSManager:
+             return True
+         
+         try:
+-            ChannelFactoryInitialize(1)
++            # g1_inspire_vla_ws patch: domain stays 1 (official); the NIC can be pinned (e.g. "lo") via
++            # G1IV_DDS_IFACE so simulator DDS traffic never reaches the lab network. Unset = official behaviour.
++            import os as _os
++            ChannelFactoryInitialize(1, _os.environ.get("G1IV_DDS_IFACE") or None)
+             self.dds_initialized = True
+             print("[DDSManager] DDS system initialized")
+             return True
+diff --git a/sim_main.py b/sim_main.py
+index dc4cfe5..c38a49c 100644
+--- a/sim_main.py
++++ b/sim_main.py
+@@ -102,6 +102,10 @@ from layeredcontrol.robot_control_system import (
+ 
+ from dds.reset_pose_dds import *
+ import tasks
++# --- g1_inspire_vla_ws: optional project extension (no effect unless G1IV_EXT=1) ---
++G1IV = None
++if os.environ.get("G1IV_EXT") == "1":
++    import g1iv_sim.ext as G1IV  # registers the project task and adds recording/status/reset hooks
+ from isaaclab_tasks.utils.parse_cfg import parse_env_cfg
+ 
+ from tools.augmentation_utils import (
+@@ -184,6 +188,8 @@ def main():
+         env_cfg.seed = args_cli.seed
+         env = gym.make(args_cli.task, cfg=env_cfg).unwrapped
+         env.seed(args_cli.seed)
++        if G1IV is not None:
++            G1IV.on_env_created(env, env_cfg, args_cli)
+         try:
+             sensors_dict = getattr(env.scene, "sensors", {})
+             if sensors_dict:
+@@ -423,6 +429,8 @@ def main():
+     controller = RobotController(env, control_config)
+     controller.set_action_provider(action_provider)
+     print("========= create controller success =========")
++    if G1IV is not None:
++        G1IV.on_controller_ready(env, controller, action_provider, args_cli)
+     
+     # configure performance analysis
+     if args_cli.enable_profiling:
+@@ -534,6 +542,8 @@ def main():
+                 
+                 # execute control step (in main thread, support rendering)
+                 controller.step()
++                if G1IV is not None:
++                    G1IV.on_step(env)
+ 
+                 # print statistics and loop frequency periodically
+                 if current_time - last_stats_time >= args_cli.stats_interval:
+@@ -581,6 +591,11 @@ def main():
+     finally:
+         # clean up resources
+         print("\nclean up resources...")
++        if G1IV is not None:
++            try:
++                G1IV.on_shutdown()
++            except Exception as e:
++                print(f"[g1iv] shutdown hook failed: {e}")
+         controller.cleanup()
+         image_server.stop()
+         env.close()
+@@ -609,7 +624,8 @@ if __name__ == "__main__":
+         
+         try:
+             # Find all related Python processes
+-            result = subprocess.run(['pgrep', '-f', 'sim_main.py'], 
++            # g1_inspire_vla_ws patch: only this process's own children, never every 'sim_main.py' on the host
++            result = subprocess.run(['pgrep', '-P', str(current_pid)],
+                                   capture_output=True, text=True)
+             if result.returncode == 0:
+                 pids = result.stdout.strip().split('\n')
+@@ -629,7 +645,7 @@ if __name__ == "__main__":
+                 time.sleep(2)
+                 
+                 # Check if there are any remaining processes, force kill them
+-                result2 = subprocess.run(['pgrep', '-f', 'sim_main.py'], 
++                result2 = subprocess.run(['pgrep', '-P', str(current_pid)],
+                                        capture_output=True, text=True)
+                 if result2.returncode == 0:
+                     remaining_pids = result2.stdout.strip().split('\n')

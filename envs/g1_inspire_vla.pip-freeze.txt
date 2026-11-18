@@ -1,0 +1,31 @@
+absl-py==2.5.1
+antlr4-python3-runtime==4.9.3
+attrs==26.1.0
+dm-tree==0.1.9
+filelock==4.2.4
+fsspec==2026.9.0
+-e git+https://github.com/NVIDIA/Isaac-GR00T.git@3b49067943eb1ab2eb2203b93d461c4390c78da3#egg=gr00t
+Jinja2==3.1.6
+MarkupSafe==3.0.3
+mpmath==1.3.0
+networkx==3.7
+numpy==1.26.4
+omegaconf==2.3.0
+packaging @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_packaging_1785888127/work
+pandas==2.2.3
+pillow==13.0.0
+pip @ file:///home/conda/feedstock_root/build_artifacts/pip_1793659322676/work
+pyarrow==21.0.0
+python-dateutil==4.0.0
+pytz==2026.6
+PyYAML==6.0.3
+setuptools==84.2.1
+sympy==1.14.0
+termcolor==3.2.0
+torch==2.9.0+cpu
+torchcodec==0.8.0
+torchvision==0.24.0+cpu
+typing_extensions==4.16.0
+tzdata==2026.6
+wheel==0.48.0
+wrapt==2.5.2

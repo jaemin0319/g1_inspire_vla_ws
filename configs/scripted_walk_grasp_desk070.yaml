@@ -1,0 +1,73 @@
+# Automatic walk -> stand -> right-hand grasp -> lift for the 0.70 m desk (the desk height before 2026-11-17):
+#   scripts/run_sim.sh --scene-set desk.top_surface_height=0.70 ...
+#   scripts/run_mock_teleop.sh scripted_walk --desk 0.70        (or --plan configs/scripted_walk_grasp_desk070.yaml)
+# Result 2026-11-17: 9/10 with random start pose / object position (5/6 without cameras, 4/4 recorded with cameras).
+# Grasp geometry = configs/scripted_grasp.yaml hand_models.rh56e2 (level hand, verified 3/3 on 2026-11-12 with the robot
+# reset to (0.64, -0.12); it then settles at (0.691, -0.102), i.e. the object at (0.33, -0.10) in the robot frame). Here the robot WALKS to that relative
+# pose instead of being reset there. The level-hand grasp tolerates little stand error (0.40/-0.10 and 0.40/-0.15
+# failed, docs/HAND_RH56E2.md section 6), hence tolerances of 2.5 cm. Scripted expert with simulator ground truth.
+side: right
+desk_top_z: 0.70
+object_half_height: 0.06
+grasp_rpy_deg: [0.0, 0.0, 0.0]
+offsets_frame: pelvis
+grasp_point_dz: 0.0
+raise_dx: -0.04
+raise_z: 0.06
+pregrasp_offset: [-0.170, -0.130, 0.005]
+grasp_offset: [-0.170, -0.060, 0.005]
+lift_height: 0.10
+t_raise: 3.0
+t_pregrasp: 3.0
+t_approach: 2.0
+t_close: 1.2
+t_lift: 2.0
+t_hold: 2.0
+success_lift_m: 0.05
+servo_approach: true
+servo_gain: 2.0
+servo_limit_m: 0.04
+servo_tol_m: 0.005
+servo_settle_max_s: 2.0
+
+walk:
+  stand_rel: [0.33, -0.10]          # object in the robot frame where the 2026-11-12 grasp succeeded (reset to
+                                    # (0.64, -0.12) settles at (0.691, -0.102): measured 2026-11-17)
+  goal_yaw_deg: 0.0                 # world yaw to face at the stand pose (0 = square to the desk front)
+  start_delay_s: 1.0                # stand still first (recording starts here)
+  vx_walk: 0.5                      # forward command while walking (|vx| < ~0.3 does not step)
+  lateral_mode: holonomic           # holonomic: keep facing goal_yaw, sideways component removes the cross error
+                                    # (in-place turns are unreliable, so do not let the heading wander); stanley: steer
+  k_lat: 3.0                        # holonomic: vy = -k_lat * cross error (1/s)
+  vy_walk_max: 0.5
+  wz_walk_max: 0.8                  # yaw-rate command limit while walking (steering works while stepping)
+  k_cross: 2.5                      # stanley only, 1/m
+  k_yaw: 2.0                        # 1/s
+  ramp_s: 0.3
+  stop_dist_m: 0.10                 # stop commanding this far before the stand pose (policy coasts ~0.09 m)
+  settle_s: 1.0
+  tol_along_m: 0.025                # robot-frame object position vs stand_rel
+  tol_cross_m: 0.025
+  tol_yaw_deg: 12.0
+  max_corrections: 3
+  correction: reapproach            # reapproach: back off backoff_s at -vx_back, then walk in again (short
+                                    # single-axis pulses do not make the policy step: it sways and returns);
+                                    # pulse: single-axis pulses (kept for experiments)
+  backoff_s: 1.0
+  pre_walk_s: 0.6
+  timeout_s: 40.0                   # sim seconds for the whole walking part
+  pulse:                            # corrective pulses (measured responses, see sources.py _plan_pulse)
+    vx_fwd: 0.5
+    fwd_speed: 0.23
+    fwd_coast_m: 0.09
+    vx_back: 0.6
+    back_speed: 0.2
+    back_coast_m: 0.05
+    vy: 0.5
+    lat_speed: 0.13
+    lat_coast_m: 0.05
+    wz: 1.57
+    yaw_rate: 0.2                   # rad/s actually reached (measured: 0.8 s at 1.57 -> ~11 deg, sometimes no step)
+    yaw_min_s: 0.8
+
+hand_models: {}

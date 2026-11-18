@@ -1,0 +1,39 @@
+# Inspire RH56E2 (= RH56DFTP family) hands on the G1 29-DoF body. Sources, checks and limits: docs/HAND_RH56E2.md.
+# Selected by configs/scene_desk.yaml robot.hand_model (rh56e2 | inspire_dfx_official).
+#
+# Build (once; inputs under data/reference/inspire_ftp, outputs under data/assets, both git-ignored):
+#   tools/cad/make_inspire_e2_hand.py   Inspire URDF -> data/assets/inspire_rh56e2/rh56e2_hands.npz   (CAD venv)
+#   tools/build_inspire_e2_usd.py       official G1 USD + npz -> usd below                              (sim env)
+usd: data/assets/robots/g1_29dof_inspire_rh56e2/g1_29dof_with_inspire_rh56e2.usd
+hands_npz: data/assets/inspire_rh56e2/rh56e2_hands.npz
+
+# Joint ranges of the driven joints [rad] (Inspire RH56E2 URDF 2026-01-05 = RH56E2 manual: fingers 0..82.4 deg,
+# thumb bend 28.5..64 deg -> 35.5 deg, thumb rotation 75..170 deg -> 95 deg). The DDS command q in [0, 1]
+# (1 = open) maps linearly: angle = (1 - q) * (upper - lower) + lower, as for the official DFX hand.
+ranges:
+  finger: [0.0, 1.4381]          # X_proximal_joint      (DFX: 0..1.7)
+  thumb_pitch: [0.0, 0.62]       # thumb_proximal_pitch  (DFX: 0..0.5)
+  thumb_yaw: [0.0, 1.658]        # thumb_proximal_yaw    (DFX: -0.1..1.3)
+# Coupled joints (Inspire URDF <mimic>): driven by the simulator with these ratios
+couplings:
+  finger_intermediate: 1.0843    # X_intermediate = 1.0843 * X_proximal        (DFX: 1.0)
+  thumb_intermediate: 0.8392     # thumb_intermediate = 0.8392 * thumb_pitch    (DFX: 1.5)
+  thumb_distal: 0.74773          # thumb_distal = 0.891 * thumb_intermediate    (DFX: 2.4)
+
+# Colour of each part label (tools/cad/make_inspire_e2_hand.py label_faces). [r, g, b, metallic, roughness]
+colorway: dftp
+colorways:
+  dftp:      # RH56DFTP / RH56E2 white version (Inspire RH56E2 application photos, RH56DFTP product image)
+    black: [0.035, 0.035, 0.04, 0.0, 0.55]
+    shell: [0.90, 0.90, 0.90, 0.0, 0.30]
+    cover: [0.92, 0.92, 0.92, 0.0, 0.25]
+    pad:   [0.02, 0.02, 0.02, 0.0, 0.80]
+    metal: [0.74, 0.75, 0.77, 1.0, 0.32]
+    lens:  [0.86, 0.86, 0.86, 0.0, 0.15]
+  e2_black:  # RH56E2 renders on Inspire's product page (black fingers and thumb, white back cover)
+    black: [0.035, 0.035, 0.04, 0.0, 0.55]
+    shell: [0.045, 0.045, 0.05, 0.0, 0.45]
+    cover: [0.92, 0.92, 0.92, 0.0, 0.25]
+    pad:   [0.02, 0.02, 0.02, 0.0, 0.80]
+    metal: [0.74, 0.75, 0.77, 1.0, 0.32]
+    lens:  [0.86, 0.86, 0.86, 0.0, 0.15]

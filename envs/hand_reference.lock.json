@@ -1,0 +1,1861 @@
+{
+ "comment": "Inspire RH56E2 + Unitree FTP hand references for tools/cad/make_inspire_e2_hand.py (docs/HAND_RH56E2.md). Fetched by scripts/setup/fetch_hand_reference.py into data/reference/inspire_ftp/ (git-ignored, not redistributed); git_blob = git hash-object of the file at the pinned commit.",
+ "files": [
+  {
+   "local": "rh56e2/R_2026_1_5/CMakeLists.txt",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/CMakeLists.txt",
+   "git_blob": "09666448dba21a0a340025fa4543d30f67fbedf2",
+   "size": 550
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/LICENSE",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/LICENSE",
+   "git_blob": "d6cc1cb335ce3f0befc9156878c153338975acd4",
+   "size": 1485
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/config/joint_names_RH56E2_R_2026_1_5.yaml",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/config/joint_names_RH56E2_R_2026_1_5.yaml",
+   "git_blob": "61e81a4b77467df62a672ecc83461332e34de752",
+   "size": 310
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/fix_paths.py",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/fix_paths.py",
+   "git_blob": "18647727beff974cd708ccd0637a617302b0c8e2",
+   "size": 564
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/launch/display.launch",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/launch/display.launch",
+   "git_blob": "43b3a9e75a9c8dce9bdec645e2c0fac4a44a6dec",
+   "size": 512
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/launch/display.launch.py",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/launch/display.launch.py",
+   "git_blob": "8ed348a2ccebfb1418898f1eaa087a2cc9e35884",
+   "size": 1836
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/launch/gazebo.launch",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/launch/gazebo.launch",
+   "git_blob": "42a62082d5b659c55cecdaff4612a44249818714",
+   "size": 579
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/r_base_link.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/r_base_link.STL",
+   "git_blob": "c9ae6c517d62ab307407aae5afde47a099534d10",
+   "size": 4292384
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_index_1.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_index_1.STL",
+   "git_blob": "a813fe73ae1831092debfbd2edcc706f70e49292",
+   "size": 772784
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_index_2.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_index_2.STL",
+   "git_blob": "39e6246da8d3720a204adc551ebec1df3c3b02fe",
+   "size": 372484
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_index_force_sensor_1.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_index_force_sensor_1.STL",
+   "git_blob": "b271a2ad21ce8c4966c75ce6a52651d0696eaec3",
+   "size": 359084
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_index_force_sensor_2.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_index_force_sensor_2.STL",
+   "git_blob": "f056699582d52a4dfcb66af9f70b7ed68a53bab2",
+   "size": 371084
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_index_force_sensor_3.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_index_force_sensor_3.STL",
+   "git_blob": "7bf3a71fa5b485fdaebf0ef1682884a44be37ba6",
+   "size": 87284
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_little_1.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_little_1.STL",
+   "git_blob": "368da3a6597f9d079ce64dac2365fbf08f530e88",
+   "size": 772784
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_little_2.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_little_2.STL",
+   "git_blob": "4b519c2e89f16279905b7aaadf0ce1c01364cadf",
+   "size": 380384
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_little_force_sensor_1.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_little_force_sensor_1.STL",
+   "git_blob": "c4bffaf2191e78335395565059d51af4adfc7d2c",
+   "size": 359084
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_little_force_sensor_2.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_little_force_sensor_2.STL",
+   "git_blob": "c1d599d2221b7e021ec671e8f062173d118610a1",
+   "size": 397084
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_little_force_sensor_3.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_little_force_sensor_3.STL",
+   "git_blob": "f5d06b491301463345e1bace0c9527f5614c059a",
+   "size": 81784
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_middle_1.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_middle_1.STL",
+   "git_blob": "743eb7bf61e21a879fbc1df4120797f5520f922c",
+   "size": 772784
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_middle_2.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_middle_2.STL",
+   "git_blob": "4accc87584556423b990922edc4db2021e8654a2",
+   "size": 363384
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_middle_force_sensor_1.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_middle_force_sensor_1.STL",
+   "git_blob": "d42d83071a167220c1f8d0674972feb1b4282bde",
+   "size": 359084
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_middle_force_sensor_2.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_middle_force_sensor_2.STL",
+   "git_blob": "2feead595c7c036dc03fec1998cf66bc3ff9062c",
+   "size": 326984
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_middle_force_sensor_3.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_middle_force_sensor_3.STL",
+   "git_blob": "bb35da18803f1f52ca55dbdcd350cc6623a3c6f5",
+   "size": 80384
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_plam_casing.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_plam_casing.STL",
+   "git_blob": "923cc6f185718764a50724dc458d87110acd032c",
+   "size": 290084
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_plam_force_sensor.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_plam_force_sensor.STL",
+   "git_blob": "60824bf5e2a07d179fecaeee5102ce500a970081",
+   "size": 1584484
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_ring_1.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_ring_1.STL",
+   "git_blob": "3b04b779aa464d3c95a6bdbf6b9c408fcb5e7203",
+   "size": 772784
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_ring_2.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_ring_2.STL",
+   "git_blob": "cad84916b2d0ec96969b4b3ded230e340dfb5d3d",
+   "size": 372484
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_ring_force_sensor_1.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_ring_force_sensor_1.STL",
+   "git_blob": "40d42a15dd7b942d2afba8f540ecef36e2c9dc90",
+   "size": 359084
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_ring_force_sensor_2.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_ring_force_sensor_2.STL",
+   "git_blob": "067fc6e57c81bef337871a711deb17435d43b7c8",
+   "size": 371084
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_ring_force_sensor_3.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_ring_force_sensor_3.STL",
+   "git_blob": "32c799b5617faa524b21008bcfc0704bd913c29d",
+   "size": 87284
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_thumb_1.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_thumb_1.STL",
+   "git_blob": "059f463eddae25c2591f01661692d11a7367f508",
+   "size": 61684
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_thumb_2.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_thumb_2.STL",
+   "git_blob": "479b906bb21ed48744351d914d1fdc5ea86c4526",
+   "size": 3537584
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_thumb_3.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_thumb_3.STL",
+   "git_blob": "73d968fd3098cca0e920320a00eda0b020d3eb86",
+   "size": 892684
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_thumb_4.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_thumb_4.STL",
+   "git_blob": "3480e21c2d6d7c366ce63312553be85c08eb0d27",
+   "size": 543284
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_thumb_force_sensor_1.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_thumb_force_sensor_1.STL",
+   "git_blob": "0d7b08d367cc95deb802aab1c2aa37aea9fb85b4",
+   "size": 514784
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_thumb_force_sensor_2.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_thumb_force_sensor_2.STL",
+   "git_blob": "6902fefdabf1f909cf85f00617aed89eccc87298",
+   "size": 197284
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_thumb_force_sensor_3.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_thumb_force_sensor_3.STL",
+   "git_blob": "54f98aea19ee735ea24538b06201a51fe99047a9",
+   "size": 376584
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/meshes/right_thumb_force_sensor_4.STL",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/meshes/right_thumb_force_sensor_4.STL",
+   "git_blob": "750fe9ebec6ee1bde6c9e123120a63f33dcc1a05",
+   "size": 110784
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/package.xml",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/package.xml",
+   "git_blob": "326a62ffc0850ce3c50b410c10906883a6c44b42",
+   "size": 846
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/rviz/right.rviz",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/rviz/right.rviz",
+   "git_blob": "109adda147854d698a34031c55d97944f642582a",
+   "size": 9433
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/test_mimic.py",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/test_mimic.py",
+   "git_blob": "a5c5acaa57f75307c21702604a6cb0642e246115",
+   "size": 11936
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/urdf/RH56E2_R_2026_1_5.csv",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/urdf/RH56E2_R_2026_1_5.csv",
+   "git_blob": "77209e84db525288afdca94a3de8f7e0faacb10b",
+   "size": 18502
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/urdf/RH56E2_R_2026_1_5.urdf",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/urdf/RH56E2_R_2026_1_5.urdf",
+   "git_blob": "4361a5bea88489c665218965f2fc73df63defca5",
+   "size": 46421
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/urdf/RH56E2_R_2026_1_5.xacro",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/urdf/RH56E2_R_2026_1_5.xacro",
+   "git_blob": "3abba89f1d18231251faf3177d3068cd1997e157",
+   "size": 46465
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/urdf/RH56E2_R_2026_1_5_abs.urdf",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/urdf/RH56E2_R_2026_1_5_abs.urdf",
+   "git_blob": "5b15e179aee9403e47b518949b2ffa879ab3568d",
+   "size": 48529
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd/.asset_hash",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd/.asset_hash",
+   "git_blob": "60aa7ab317e29c616f0f09f6db6c7cfe4d257903",
+   "size": 32
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/RH56E2_R_2026_1_5_abs.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/RH56E2_R_2026_1_5_abs.usda",
+   "git_blob": "2aa7768efb58cf210fc2dfe9202cbaad665b8ca0",
+   "size": 1820
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/payloads/Physics/mujoco.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/payloads/Physics/mujoco.usda",
+   "git_blob": "b40bd7682cdfe0ba937458e3565004ffb6c6d631",
+   "size": 9450
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/payloads/Physics/physics.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/payloads/Physics/physics.usda",
+   "git_blob": "3851ff821331024edc2f94ffe4fa179fca2badd1",
+   "size": 21056
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/payloads/Physics/physx.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/payloads/Physics/physx.usda",
+   "git_blob": "b612639392ed1cf53c583ccb96d2eca6e725bf6f",
+   "size": 9545
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/payloads/base.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/payloads/base.usda",
+   "git_blob": "d0f85fef51a84e7d31ed2708804466773c0c8fed",
+   "size": 44226
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/payloads/geometries.usd",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/payloads/geometries.usd",
+   "git_blob": "b41340cea3719e0a6e8b3f2a5a7b23d4127dcfc6",
+   "size": 7339518
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/payloads/instances.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/payloads/instances.usda",
+   "git_blob": "2b6876b5ed10c9377951fc9b5cd091709c8b9174",
+   "size": 43114
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/payloads/materials.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/payloads/materials.usda",
+   "git_blob": "2c294f994341954c7a10db818c78071f14088d02",
+   "size": 4679
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/payloads/robot.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd/RH56E2_R_2026_1_5_abs/payloads/robot.usda",
+   "git_blob": "5b47f88647cea65d7c78bf442ba8667e0100a883",
+   "size": 4496
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd/config.yaml",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd/config.yaml",
+   "git_blob": "e2dd254902b7668a1f9d0f4d05e478bbed5dcfec",
+   "size": 724
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_floating/.asset_hash",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_floating/.asset_hash",
+   "git_blob": "77dda977a614c736728a43dcc4cf96056a1fb8e2",
+   "size": 32
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/RH56E2_R_2026_1_5_abs.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/RH56E2_R_2026_1_5_abs.usda",
+   "git_blob": "dd5d4fd6ad1c0e62b2219a0a0fc51c4a1af0dded",
+   "size": 1215
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/payloads/Physics/mujoco.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/payloads/Physics/mujoco.usda",
+   "git_blob": "9e188cec5bddefae21dc7cb5c8de9f8effe432f5",
+   "size": 9438
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/payloads/Physics/physics.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/payloads/Physics/physics.usda",
+   "git_blob": "7cdd8351b2ad7efb2228057a9c79119dc41b12da",
+   "size": 20916
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/payloads/Physics/physx.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/payloads/Physics/physx.usda",
+   "git_blob": "efb13393e7beb3c467c8ba45136bd44b843dc911",
+   "size": 9533
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/payloads/base.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/payloads/base.usda",
+   "git_blob": "5079a2eeae2c6116118136a8bded96b397c7e7eb",
+   "size": 44253
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/payloads/geometries.usd",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/payloads/geometries.usd",
+   "git_blob": "35b0045119d04679e17066e1f03596446f6b8a30",
+   "size": 7339556
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/payloads/instances.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/payloads/instances.usda",
+   "git_blob": "5f3a26aae1da40523f77208f1e00cee88d30f239",
+   "size": 43141
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/payloads/materials.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/payloads/materials.usda",
+   "git_blob": "c5f570657182cb23ba3a8a616f7c03b1a1e9d751",
+   "size": 4706
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/payloads/robot.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_floating/RH56E2_R_2026_1_5_abs/payloads/robot.usda",
+   "git_blob": "e05505a3910a75278e8bdbe3a9e7f06f9943bbd1",
+   "size": 4429
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_floating/config.yaml",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_floating/config.yaml",
+   "git_blob": "b4542bbd542e1d8be393c15855ef665d01870f33",
+   "size": 734
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_freeroot/.asset_hash",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_freeroot/.asset_hash",
+   "git_blob": "77dda977a614c736728a43dcc4cf96056a1fb8e2",
+   "size": 32
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/RH56E2_R_2026_1_5_abs.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/RH56E2_R_2026_1_5_abs.usda",
+   "git_blob": "f56eecd19b625d318d48cbe87afc9ef16f44b880",
+   "size": 1215
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/payloads/Physics/mujoco.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/payloads/Physics/mujoco.usda",
+   "git_blob": "5bc67922d3c854edf732c2344670a1325f419e39",
+   "size": 9438
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/payloads/Physics/physics.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/payloads/Physics/physics.usda",
+   "git_blob": "2e2f173c9750d8285ff5100e427d058c94dc0573",
+   "size": 20434
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/payloads/Physics/physx.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/payloads/Physics/physx.usda",
+   "git_blob": "5b305fed3349fe13b27fdb77c44dc402b30b0de2",
+   "size": 9533
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/payloads/base.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/payloads/base.usda",
+   "git_blob": "8b8ad9963fea12a6d4ebe781a4b5663f3f1cd949",
+   "size": 44253
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/payloads/geometries.usd",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/payloads/geometries.usd",
+   "git_blob": "ba7236f96307c635cbe6fe090544737e0d208f50",
+   "size": 7339516
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/payloads/instances.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/payloads/instances.usda",
+   "git_blob": "107916dc536cafbc0d86bff71920011447c9a017",
+   "size": 43141
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/payloads/materials.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/payloads/materials.usda",
+   "git_blob": "469dd9be6d2e164c682d353e3c6220f2bb424581",
+   "size": 4706
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/payloads/robot.usda",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_freeroot/RH56E2_R_2026_1_5_abs/payloads/robot.usda",
+   "git_blob": "450cda5e0051738d2474e221a8647e2f7d071ca0",
+   "size": 4429
+  },
+  {
+   "local": "rh56e2/R_2026_1_5/usd_freeroot/config.yaml",
+   "repo": "hychen-naza/isaaclab_env",
+   "commit": "cccdf11f2f481b05f20d96123605c9a4e9c09f37",
+   "path": "RH56E2_R_2026_1_5/usd_freeroot/config.yaml",
+   "git_blob": "1222e13ddc8ff323b917ad4d61d91d5908c1a967",
+   "size": 734
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/CMakeLists.txt",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/CMakeLists.txt",
+   "git_blob": "30dc10ea7a3fba332d431057496d626502f559e4",
+   "size": 551
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/LICENSE",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/LICENSE",
+   "git_blob": "d6cc1cb335ce3f0befc9156878c153338975acd4",
+   "size": 1485
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/config/joint_names_RH56E2_L_2025_9_10.yaml",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/config/joint_names_RH56E2_L_2025_9_10.yaml",
+   "git_blob": "8fcb48cb3902217a17e9efaef411a06900a88a9e",
+   "size": 298
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/launch/display.launch",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/launch/display.launch",
+   "git_blob": "906fc816eccf6baade02238d7abd91488901d0e0",
+   "size": 515
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/launch/display.launch.py",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/launch/display.launch.py",
+   "git_blob": "91087bfffb420639fc94892877bd66867dcf5334",
+   "size": 1837
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/launch/gazebo.launch",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/launch/gazebo.launch",
+   "git_blob": "ba3ba6835706fc723ce665e469a0dd7a36a4dbc6",
+   "size": 582
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/base_link.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/base_link.STL",
+   "git_blob": "078d32875664db5077078c54b3bf22d6c90786b8",
+   "size": 106084
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_index_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_index_1.STL",
+   "git_blob": "565558e6b30a3b06ae604eb55762652a62c8749b",
+   "size": 769484
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_index_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_index_2.STL",
+   "git_blob": "4bf68d5cd5d634666fabc870916ac14726047c7f",
+   "size": 370184
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_index_force_sensor_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_index_force_sensor_1.STL",
+   "git_blob": "aaff5073a7e0269a61ffde48234de46f1abbd2c5",
+   "size": 360484
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_index_force_sensor_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_index_force_sensor_2.STL",
+   "git_blob": "6d94e9c4674c455cf7ab91a4e96523171393d9bd",
+   "size": 371784
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_index_force_sensor_3.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_index_force_sensor_3.STL",
+   "git_blob": "969b5b1e7d3d1eb8e77c3939a662458918dd7051",
+   "size": 86684
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_little_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_little_1.STL",
+   "git_blob": "d5cd796c044d54c3d033c923786a49133605f474",
+   "size": 769484
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_little_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_little_2.STL",
+   "git_blob": "065fc9ed5f386f238395a355b6d02c5f3cbb97b4",
+   "size": 381484
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_little_force_sensor_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_little_force_sensor_1.STL",
+   "git_blob": "37a6f8594586fcb3fc875b0554a4bb7cd1645129",
+   "size": 360484
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_little_force_sensor_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_little_force_sensor_2.STL",
+   "git_blob": "a81dc8630112a8353faca6925ea715fae2a98f29",
+   "size": 397784
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_little_force_sensor_3.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_little_force_sensor_3.STL",
+   "git_blob": "ae91ce9183a6ee19db7d32932fe3c1621f189e2a",
+   "size": 81784
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_middle_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_middle_1.STL",
+   "git_blob": "9e8ef044e4cb7eaee5d0f2e695fbc04a8a86ff73",
+   "size": 769484
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_middle_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_middle_2.STL",
+   "git_blob": "764b520375f913a86ffa84e8c172d0b1b5a84989",
+   "size": 362384
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_middle_force_sensor_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_middle_force_sensor_1.STL",
+   "git_blob": "b79d2e00aa25ca9059c5bf0da86eec7e2211b52d",
+   "size": 360484
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_middle_force_sensor_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_middle_force_sensor_2.STL",
+   "git_blob": "c4429adc0de6cf10fb617495215a3ef1b45e3f43",
+   "size": 326984
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_middle_force_sensor_3.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_middle_force_sensor_3.STL",
+   "git_blob": "e4060cebc01eaf2b7ef5516958774fc2a4882dce",
+   "size": 80584
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_plam_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_plam_1.STL",
+   "git_blob": "c8c5cb46ce02113c4370660900e7033118746138",
+   "size": 3005684
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_plam_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_plam_2.STL",
+   "git_blob": "7c15dfc43e7326dbc3d4c489eb2eb63099b93727",
+   "size": 290084
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_plam_force_sensor.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_plam_force_sensor.STL",
+   "git_blob": "9d9229430c54159039496f922418da7947058af7",
+   "size": 1614284
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_ring_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_ring_1.STL",
+   "git_blob": "516eb4c87c233f4bcdb276c9bb930ef9212ea590",
+   "size": 769484
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_ring_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_ring_2.STL",
+   "git_blob": "9742354b51e334248153c3c3017c47cdb6016f44",
+   "size": 370184
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_ring_force_sensor_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_ring_force_sensor_1.STL",
+   "git_blob": "a54db210ab9e6d2a4a955cdbdedc6b332de1741d",
+   "size": 360484
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_ring_force_sensor_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_ring_force_sensor_2.STL",
+   "git_blob": "c040e9cd20f322fbba7fcbd99747440f4b9529fc",
+   "size": 371784
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_ring_force_sensor_3.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_ring_force_sensor_3.STL",
+   "git_blob": "c6af364a8d61c2bb598607eda36516a30b247757",
+   "size": 86684
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_thumb_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_thumb_1.STL",
+   "git_blob": "1b1d5ee3cd10a3b11a737d89fa89e9a703b366d3",
+   "size": 61684
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_thumb_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_thumb_2.STL",
+   "git_blob": "60cc8c35ac64ff9d8bad192fbab16a3cea534091",
+   "size": 3537584
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_thumb_3.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_thumb_3.STL",
+   "git_blob": "74eff8596ac414c0c14835975a285088e9a52b49",
+   "size": 892684
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_thumb_4.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_thumb_4.STL",
+   "git_blob": "5c1de260f2e847adaa6774f441fe752c2ffc8c86",
+   "size": 543284
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_thumb_force_sensor_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_thumb_force_sensor_1.STL",
+   "git_blob": "421fc0528acfc6ab4345e818b88e7a97c464d7cb",
+   "size": 514784
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_thumb_force_sensor_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_thumb_force_sensor_2.STL",
+   "git_blob": "b2e66989a09c3ef03749aff9a01b919785fbf2b9",
+   "size": 197284
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_thumb_force_sensor_3.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_thumb_force_sensor_3.STL",
+   "git_blob": "cbf39af5838723e2e3bd6d01a9421bbcf36ba0b4",
+   "size": 376584
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/meshes/left_thumb_force_sensor_4.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/meshes/left_thumb_force_sensor_4.STL",
+   "git_blob": "c8770e30f75743cf951483035e102416987f0b2b",
+   "size": 110784
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/package.xml",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/package.xml",
+   "git_blob": "7729a535514a135f33b3d11cfd23e3ad318185b1",
+   "size": 849
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/rviz/left.rviz",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/rviz/left.rviz",
+   "git_blob": "4755070f01056114db51d5458db7663e05acdb5c",
+   "size": 12872
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/urdf/RH56E2_L_2025_9_10.csv",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/urdf/RH56E2_L_2025_9_10.csv",
+   "git_blob": "e60c4f7b30f7f898ec1a8b9e28b1a368d42fc28d",
+   "size": 21260
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/urdf/RH56E2_L_2025_9_10.urdf",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/urdf/RH56E2_L_2025_9_10.urdf",
+   "git_blob": "b17ec3fcfbff32e5033f573a487e320bde2add47",
+   "size": 43943
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/urdf/RH56E2_L_2025_9_10.xacro",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/urdf/RH56E2_L_2025_9_10.xacro",
+   "git_blob": "b17ec3fcfbff32e5033f573a487e320bde2add47",
+   "size": 43943
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/\u53c2\u6570\u8d44\u6599/RH56E2\u8d28\u91cf\u5c5e\u6027.docx",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/\u53c2\u6570\u8d44\u6599/RH56E2\u8d28\u91cf\u5c5e\u6027.docx",
+   "git_blob": "728a89e7b0a480accafc562bd358a6bff87db515",
+   "size": 17018
+  },
+  {
+   "local": "rh56e2/L_2025_9_10/\u53c2\u6570\u8d44\u6599/extract_inertial_gui_L.py",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_L_2025_9_10/\u53c2\u6570\u8d44\u6599/extract_inertial_gui_L.py",
+   "git_blob": "6412ef208101f9cbb7280705ae48194c3249db04",
+   "size": 4586
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/CMakeLists.txt",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/CMakeLists.txt",
+   "git_blob": "2426eac577bc19358f48e7f32bf70d48f62712a5",
+   "size": 551
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/LICENSE",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/LICENSE",
+   "git_blob": "d6cc1cb335ce3f0befc9156878c153338975acd4",
+   "size": 1485
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/config/joint_names_RH56E2_R_2025_9_11.yaml",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/config/joint_names_RH56E2_R_2025_9_11.yaml",
+   "git_blob": "61e81a4b77467df62a672ecc83461332e34de752",
+   "size": 310
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/launch/display.launch",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/launch/display.launch",
+   "git_blob": "89fc52a641b077b01ebfac4847aa9cfe8f1dc1a1",
+   "size": 515
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/launch/display.launch.py",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/launch/display.launch.py",
+   "git_blob": "56f7299e781b46fd54ef4ee73597a93a4c7d95e6",
+   "size": 1838
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/launch/gazebo.launch",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/launch/gazebo.launch",
+   "git_blob": "8420e36af6e9b30aab24de0e93580082778d43d3",
+   "size": 582
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/base_link.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/base_link.STL",
+   "git_blob": "5f83d24c4678364bf42268b2fb3c582f22e8efe8",
+   "size": 106084
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_index_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_index_1.STL",
+   "git_blob": "a813fe73ae1831092debfbd2edcc706f70e49292",
+   "size": 772784
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_index_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_index_2.STL",
+   "git_blob": "39e6246da8d3720a204adc551ebec1df3c3b02fe",
+   "size": 372484
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_index_force_sensor_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_index_force_sensor_1.STL",
+   "git_blob": "b271a2ad21ce8c4966c75ce6a52651d0696eaec3",
+   "size": 359084
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_index_force_sensor_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_index_force_sensor_2.STL",
+   "git_blob": "f056699582d52a4dfcb66af9f70b7ed68a53bab2",
+   "size": 371084
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_index_force_sensor_3.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_index_force_sensor_3.STL",
+   "git_blob": "7bf3a71fa5b485fdaebf0ef1682884a44be37ba6",
+   "size": 87284
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_little_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_little_1.STL",
+   "git_blob": "368da3a6597f9d079ce64dac2365fbf08f530e88",
+   "size": 772784
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_little_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_little_2.STL",
+   "git_blob": "4b519c2e89f16279905b7aaadf0ce1c01364cadf",
+   "size": 380384
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_little_force_sensor_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_little_force_sensor_1.STL",
+   "git_blob": "c4bffaf2191e78335395565059d51af4adfc7d2c",
+   "size": 359084
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_little_force_sensor_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_little_force_sensor_2.STL",
+   "git_blob": "c1d599d2221b7e021ec671e8f062173d118610a1",
+   "size": 397084
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_little_force_sensor_3.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_little_force_sensor_3.STL",
+   "git_blob": "f5d06b491301463345e1bace0c9527f5614c059a",
+   "size": 81784
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_middle_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_middle_1.STL",
+   "git_blob": "743eb7bf61e21a879fbc1df4120797f5520f922c",
+   "size": 772784
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_middle_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_middle_2.STL",
+   "git_blob": "4accc87584556423b990922edc4db2021e8654a2",
+   "size": 363384
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_middle_force_sensor_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_middle_force_sensor_1.STL",
+   "git_blob": "d42d83071a167220c1f8d0674972feb1b4282bde",
+   "size": 359084
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_middle_force_sensor_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_middle_force_sensor_2.STL",
+   "git_blob": "2feead595c7c036dc03fec1998cf66bc3ff9062c",
+   "size": 326984
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_middle_force_sensor_3.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_middle_force_sensor_3.STL",
+   "git_blob": "bb35da18803f1f52ca55dbdcd350cc6623a3c6f5",
+   "size": 80384
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_plam_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_plam_1.STL",
+   "git_blob": "aa033f6336e1d19d62d09d039683c7a11ab38f71",
+   "size": 4171384
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_plam_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_plam_2.STL",
+   "git_blob": "648526f26f21ed9dd0f0e555789a1adcda675d75",
+   "size": 290084
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_plam_force_sensor.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_plam_force_sensor.STL",
+   "git_blob": "60824bf5e2a07d179fecaeee5102ce500a970081",
+   "size": 1584484
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_ring_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_ring_1.STL",
+   "git_blob": "3b04b779aa464d3c95a6bdbf6b9c408fcb5e7203",
+   "size": 772784
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_ring_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_ring_2.STL",
+   "git_blob": "cad84916b2d0ec96969b4b3ded230e340dfb5d3d",
+   "size": 372484
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_ring_force_sensor_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_ring_force_sensor_1.STL",
+   "git_blob": "40d42a15dd7b942d2afba8f540ecef36e2c9dc90",
+   "size": 359084
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_ring_force_sensor_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_ring_force_sensor_2.STL",
+   "git_blob": "26b71ce375f5df4e47f30117fd42b09098fdb854",
+   "size": 371084
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_ring_force_sensor_3.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_ring_force_sensor_3.STL",
+   "git_blob": "32c799b5617faa524b21008bcfc0704bd913c29d",
+   "size": 87284
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_thumb_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_thumb_1.STL",
+   "git_blob": "059f463eddae25c2591f01661692d11a7367f508",
+   "size": 61684
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_thumb_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_thumb_2.STL",
+   "git_blob": "c058a9fafd1db5b06e743a31baf45c50ba425494",
+   "size": 3537584
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_thumb_3.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_thumb_3.STL",
+   "git_blob": "0a51de7425546f7ab7e189a568d8dcbb836f26c4",
+   "size": 892684
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_thumb_4.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_thumb_4.STL",
+   "git_blob": "55e99cb34e8284fea93cba6a256f5ce9d91338b5",
+   "size": 543284
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_thumb_force_sensor_1.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_thumb_force_sensor_1.STL",
+   "git_blob": "0d7b08d367cc95deb802aab1c2aa37aea9fb85b4",
+   "size": 514784
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_thumb_force_sensor_2.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_thumb_force_sensor_2.STL",
+   "git_blob": "6902fefdabf1f909cf85f00617aed89eccc87298",
+   "size": 197284
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_thumb_force_sensor_3.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_thumb_force_sensor_3.STL",
+   "git_blob": "54f98aea19ee735ea24538b06201a51fe99047a9",
+   "size": 376584
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/meshes/right_thumb_force_sensor_4.STL",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/meshes/right_thumb_force_sensor_4.STL",
+   "git_blob": "750fe9ebec6ee1bde6c9e123120a63f33dcc1a05",
+   "size": 110784
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/package.xml",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/package.xml",
+   "git_blob": "83a2e53cf90679df36dc07cfd3d4ba421542216b",
+   "size": 849
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/rviz/right.rviz",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/rviz/right.rviz",
+   "git_blob": "ccfd268e2a7cb0f06892c7167fb7e0a79e814168",
+   "size": 12963
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/urdf/RH56E2_R_2025_9_11.csv",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/urdf/RH56E2_R_2025_9_11.csv",
+   "git_blob": "85ab743ec99aa1677b3bdd9a70633fdfe9f5c165",
+   "size": 19359
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/urdf/RH56E2_R_2025_9_11.urdf",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/urdf/RH56E2_R_2025_9_11.urdf",
+   "git_blob": "9020ce19cc0a8243931ea0898737f975e67fc573",
+   "size": 44175
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/urdf/RH56E2_R_2025_9_11.xacro",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/urdf/RH56E2_R_2025_9_11.xacro",
+   "git_blob": "318e79019463e2d244ae26ef9735ebe977a6f89a",
+   "size": 44219
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/urdf/RH56E2_R_2025_9_11_relative.urdf",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/urdf/RH56E2_R_2025_9_11_relative.urdf",
+   "git_blob": "85ac0191a88452c8cffd67313d31c527c0d6feeb",
+   "size": 42511
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/\u53c2\u6570\u8d44\u6599/RH56E2\u8d28\u91cf\u5c5e\u6027.docx",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/\u53c2\u6570\u8d44\u6599/RH56E2\u8d28\u91cf\u5c5e\u6027.docx",
+   "git_blob": "728a89e7b0a480accafc562bd358a6bff87db515",
+   "size": 17018
+  },
+  {
+   "local": "rh56e2/R_2025_9_11/\u53c2\u6570\u8d44\u6599/extract_inertial_gui.py",
+   "repo": "hoon001218/contact_rich_manipulation_task_learning",
+   "commit": "cdc4300c9210b8e5422bd07334afbf729f96c0bd",
+   "path": "assets/robots/Roas_provided_inspire_urdf/RH56E2 URDF/RH56E2_R_2025_9_11/\u53c2\u6570\u8d44\u6599/extract_inertial_gui.py",
+   "git_blob": "234794f277d3d7d471f6d676fd632318f098ebfa",
+   "size": 4588
+  },
+  {
+   "local": "unitree_ros/g1_29dof_rev_1_0_with_inspire_hand_FTP.urdf",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/g1_29dof_rev_1_0_with_inspire_hand_FTP.urdf",
+   "git_blob": "4ce72b85719bac2d158549c28db4b3d8c3f8570a",
+   "size": 99579
+  },
+  {
+   "local": "unitree_ros/inspire_hand/FTP_left_hand.urdf",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/inspire_hand/FTP_left_hand.urdf",
+   "git_blob": "ab1c4261eedbfaa721cbba67d8e7e3b233a0c6a2",
+   "size": 34341
+  },
+  {
+   "local": "unitree_ros/inspire_hand/FTP_right_hand.urdf",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/inspire_hand/FTP_right_hand.urdf",
+   "git_blob": "7669215a0503779181b3b03ab0ab54f23c7e4444",
+   "size": 34234
+  },
+  {
+   "local": "unitree_ros/meshes/left_base_link.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_base_link.STL",
+   "git_blob": "9e0adba588fb557350a14289c45232436c9dad89",
+   "size": 3224784
+  },
+  {
+   "local": "unitree_ros/meshes/left_index_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_index_1.STL",
+   "git_blob": "a11e98a0c2e644f1ef114faac4329c93dab9133f",
+   "size": 769484
+  },
+  {
+   "local": "unitree_ros/meshes/left_index_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_index_2.STL",
+   "git_blob": "25c9d24d9e15753069217c5d31161a182de098d9",
+   "size": 370184
+  },
+  {
+   "local": "unitree_ros/meshes/left_index_force_sensor_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_index_force_sensor_1.STL",
+   "git_blob": "599a1f46b758bd45472f7986ca55812300b86e08",
+   "size": 360484
+  },
+  {
+   "local": "unitree_ros/meshes/left_index_force_sensor_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_index_force_sensor_2.STL",
+   "git_blob": "3a85c86755f9e0806e91b4bb88aa4fc588ecb96e",
+   "size": 371784
+  },
+  {
+   "local": "unitree_ros/meshes/left_index_force_sensor_3.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_index_force_sensor_3.STL",
+   "git_blob": "e14da6f97df9be6c236047777edf62b7107e5356",
+   "size": 86684
+  },
+  {
+   "local": "unitree_ros/meshes/left_little_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_little_1.STL",
+   "git_blob": "7558b591820082b76931bd21b69e017d199bd843",
+   "size": 769484
+  },
+  {
+   "local": "unitree_ros/meshes/left_little_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_little_2.STL",
+   "git_blob": "d6d0afddb2e4a95ea78e171e2217c7ea9aa0d66b",
+   "size": 381484
+  },
+  {
+   "local": "unitree_ros/meshes/left_little_force_sensor_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_little_force_sensor_1.STL",
+   "git_blob": "53aa6bda0516be3287a48ac43254440a2489a813",
+   "size": 360484
+  },
+  {
+   "local": "unitree_ros/meshes/left_little_force_sensor_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_little_force_sensor_2.STL",
+   "git_blob": "72f4b95ccf1c9fb164ad74f542c368862e22009e",
+   "size": 397784
+  },
+  {
+   "local": "unitree_ros/meshes/left_little_force_sensor_3.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_little_force_sensor_3.STL",
+   "git_blob": "5893145df11e51bf499992dfdfd0bba5e526caec",
+   "size": 81784
+  },
+  {
+   "local": "unitree_ros/meshes/left_middle_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_middle_1.STL",
+   "git_blob": "ff6c1ca0379a3f5fd6cbd4704b6e63de4e77c2cc",
+   "size": 769484
+  },
+  {
+   "local": "unitree_ros/meshes/left_middle_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_middle_2.STL",
+   "git_blob": "385e89a3d963cb4e897d442f6f2ae4d23efd4474",
+   "size": 362384
+  },
+  {
+   "local": "unitree_ros/meshes/left_middle_force_sensor_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_middle_force_sensor_1.STL",
+   "git_blob": "cd5a181910bbc288ff90e9395ff3f41b6b11eebb",
+   "size": 360484
+  },
+  {
+   "local": "unitree_ros/meshes/left_middle_force_sensor_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_middle_force_sensor_2.STL",
+   "git_blob": "bdb4c5e25ac34fc2f579ff8ef84d32890e548c4f",
+   "size": 326984
+  },
+  {
+   "local": "unitree_ros/meshes/left_middle_force_sensor_3.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_middle_force_sensor_3.STL",
+   "git_blob": "7f4e13b93413b054e8032f775ffc4d27f4489a13",
+   "size": 80584
+  },
+  {
+   "local": "unitree_ros/meshes/left_palm_force_sensor.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_palm_force_sensor.STL",
+   "git_blob": "f4ca00730cb58063d6d3a2e852684cf2234605ca",
+   "size": 1614284
+  },
+  {
+   "local": "unitree_ros/meshes/left_ring_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_ring_1.STL",
+   "git_blob": "6d3fdcd8fe4b9962167ea018919f1663a8845e03",
+   "size": 769484
+  },
+  {
+   "local": "unitree_ros/meshes/left_ring_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_ring_2.STL",
+   "git_blob": "614e920f27a9085fcc0275d8cf732a4f087d9cf0",
+   "size": 370184
+  },
+  {
+   "local": "unitree_ros/meshes/left_ring_force_sensor_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_ring_force_sensor_1.STL",
+   "git_blob": "79b1abf9f21d0bbf91c6f8f6f141ff5329936acc",
+   "size": 360484
+  },
+  {
+   "local": "unitree_ros/meshes/left_ring_force_sensor_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_ring_force_sensor_2.STL",
+   "git_blob": "2408f77b83bbf2218d8ebaad00298cf302216c42",
+   "size": 371784
+  },
+  {
+   "local": "unitree_ros/meshes/left_ring_force_sensor_3.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_ring_force_sensor_3.STL",
+   "git_blob": "92eaeed50ca42b87e89e7943fa2a838ffe7b19de",
+   "size": 86684
+  },
+  {
+   "local": "unitree_ros/meshes/left_thumb_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_thumb_1.STL",
+   "git_blob": "806d8da4823a6b1972afeb2c5d9318af2d66a16f",
+   "size": 32184
+  },
+  {
+   "local": "unitree_ros/meshes/left_thumb_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_thumb_2.STL",
+   "git_blob": "4f9a8ad6c9411269e4ed0d3fd15bcb9b2c6e12d5",
+   "size": 576384
+  },
+  {
+   "local": "unitree_ros/meshes/left_thumb_3.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_thumb_3.STL",
+   "git_blob": "8062151fe1d2e4409fa426f317d858a93cab6c77",
+   "size": 424484
+  },
+  {
+   "local": "unitree_ros/meshes/left_thumb_4.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_thumb_4.STL",
+   "git_blob": "ab244393bc5812ada80a7a8572bcb5140284df37",
+   "size": 547784
+  },
+  {
+   "local": "unitree_ros/meshes/left_thumb_force_sensor_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_thumb_force_sensor_1.STL",
+   "git_blob": "7215b15f46174a9b79ec870d051db6bf77c4cbee",
+   "size": 359684
+  },
+  {
+   "local": "unitree_ros/meshes/left_thumb_force_sensor_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_thumb_force_sensor_2.STL",
+   "git_blob": "2906475f20e315cb8b766e46dd311b71d2380d7a",
+   "size": 127484
+  },
+  {
+   "local": "unitree_ros/meshes/left_thumb_force_sensor_3.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_thumb_force_sensor_3.STL",
+   "git_blob": "d9e2c848bc5717048f3b55102542c750a39ffe7a",
+   "size": 294484
+  },
+  {
+   "local": "unitree_ros/meshes/left_thumb_force_sensor_4.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/left_thumb_force_sensor_4.STL",
+   "git_blob": "35bf67da185bc23cd5556b2a21849ea26d79b639",
+   "size": 64584
+  },
+  {
+   "local": "unitree_ros/meshes/right_base_link.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_base_link.STL",
+   "git_blob": "f7dae5c8d06975536dabcaf0403b7e0f6455950e",
+   "size": 4517284
+  },
+  {
+   "local": "unitree_ros/meshes/right_index_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_index_1.STL",
+   "git_blob": "c17ff302e0a01a1c6a3e848dfbffce4bc0cc6132",
+   "size": 772784
+  },
+  {
+   "local": "unitree_ros/meshes/right_index_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_index_2.STL",
+   "git_blob": "3f5e46236f5996170889022673ab75497b0ae658",
+   "size": 372484
+  },
+  {
+   "local": "unitree_ros/meshes/right_index_force_sensor_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_index_force_sensor_1.STL",
+   "git_blob": "b271a2ad21ce8c4966c75ce6a52651d0696eaec3",
+   "size": 359084
+  },
+  {
+   "local": "unitree_ros/meshes/right_index_force_sensor_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_index_force_sensor_2.STL",
+   "git_blob": "f056699582d52a4dfcb66af9f70b7ed68a53bab2",
+   "size": 371084
+  },
+  {
+   "local": "unitree_ros/meshes/right_index_force_sensor_3.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_index_force_sensor_3.STL",
+   "git_blob": "7bf3a71fa5b485fdaebf0ef1682884a44be37ba6",
+   "size": 87284
+  },
+  {
+   "local": "unitree_ros/meshes/right_little_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_little_1.STL",
+   "git_blob": "cc797889d4938da7f2bdf01aaae3958a08a912df",
+   "size": 772784
+  },
+  {
+   "local": "unitree_ros/meshes/right_little_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_little_2.STL",
+   "git_blob": "c42f6d7ae14854df081267f5cda6e0a68c673d83",
+   "size": 380384
+  },
+  {
+   "local": "unitree_ros/meshes/right_little_force_sensor_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_little_force_sensor_1.STL",
+   "git_blob": "c4bffaf2191e78335395565059d51af4adfc7d2c",
+   "size": 359084
+  },
+  {
+   "local": "unitree_ros/meshes/right_little_force_sensor_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_little_force_sensor_2.STL",
+   "git_blob": "c1d599d2221b7e021ec671e8f062173d118610a1",
+   "size": 397084
+  },
+  {
+   "local": "unitree_ros/meshes/right_little_force_sensor_3.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_little_force_sensor_3.STL",
+   "git_blob": "f5d06b491301463345e1bace0c9527f5614c059a",
+   "size": 81784
+  },
+  {
+   "local": "unitree_ros/meshes/right_middle_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_middle_1.STL",
+   "git_blob": "a6942b7896a8baa4be76af9b5a074690efedece8",
+   "size": 772784
+  },
+  {
+   "local": "unitree_ros/meshes/right_middle_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_middle_2.STL",
+   "git_blob": "0f3865f9dde55ab404cc3c629f36ac17094ea2db",
+   "size": 363384
+  },
+  {
+   "local": "unitree_ros/meshes/right_middle_force_sensor_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_middle_force_sensor_1.STL",
+   "git_blob": "d42d83071a167220c1f8d0674972feb1b4282bde",
+   "size": 359084
+  },
+  {
+   "local": "unitree_ros/meshes/right_middle_force_sensor_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_middle_force_sensor_2.STL",
+   "git_blob": "2feead595c7c036dc03fec1998cf66bc3ff9062c",
+   "size": 326984
+  },
+  {
+   "local": "unitree_ros/meshes/right_middle_force_sensor_3.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_middle_force_sensor_3.STL",
+   "git_blob": "bb35da18803f1f52ca55dbdcd350cc6623a3c6f5",
+   "size": 80384
+  },
+  {
+   "local": "unitree_ros/meshes/right_palm_force_sensor.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_palm_force_sensor.STL",
+   "git_blob": "60824bf5e2a07d179fecaeee5102ce500a970081",
+   "size": 1584484
+  },
+  {
+   "local": "unitree_ros/meshes/right_ring_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_ring_1.STL",
+   "git_blob": "6fc79ca9bd4951bd873c6a89ef6c4c526e989f04",
+   "size": 772784
+  },
+  {
+   "local": "unitree_ros/meshes/right_ring_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_ring_2.STL",
+   "git_blob": "a4cf458083aefc1983ecd2b62b97a6c3ae6a51f2",
+   "size": 372484
+  },
+  {
+   "local": "unitree_ros/meshes/right_ring_force_sensor_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_ring_force_sensor_1.STL",
+   "git_blob": "40d42a15dd7b942d2afba8f540ecef36e2c9dc90",
+   "size": 359084
+  },
+  {
+   "local": "unitree_ros/meshes/right_ring_force_sensor_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_ring_force_sensor_2.STL",
+   "git_blob": "0e9e95b2ee862cccf01ad02483054d867939d1d2",
+   "size": 371084
+  },
+  {
+   "local": "unitree_ros/meshes/right_ring_force_sensor_3.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_ring_force_sensor_3.STL",
+   "git_blob": "32c799b5617faa524b21008bcfc0704bd913c29d",
+   "size": 87284
+  },
+  {
+   "local": "unitree_ros/meshes/right_thumb_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_thumb_1.STL",
+   "git_blob": "a4f441c769e0ff3e9ff79069ce90699a217778c0",
+   "size": 32184
+  },
+  {
+   "local": "unitree_ros/meshes/right_thumb_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_thumb_2.STL",
+   "git_blob": "0b29f9b954e3bcab2c30f02095d050b5cb82b1f1",
+   "size": 579884
+  },
+  {
+   "local": "unitree_ros/meshes/right_thumb_3.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_thumb_3.STL",
+   "git_blob": "cf5cab14053fc1a6e09b6dd14683cd3ef94ea048",
+   "size": 424684
+  },
+  {
+   "local": "unitree_ros/meshes/right_thumb_4.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_thumb_4.STL",
+   "git_blob": "bf147e071eb9857ffa525d2e64aae6edea8ddc58",
+   "size": 547584
+  },
+  {
+   "local": "unitree_ros/meshes/right_thumb_force_sensor_1.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_thumb_force_sensor_1.STL",
+   "git_blob": "9993ba896ad6e99b46125f05d36c3a9001321b4a",
+   "size": 359884
+  },
+  {
+   "local": "unitree_ros/meshes/right_thumb_force_sensor_2.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_thumb_force_sensor_2.STL",
+   "git_blob": "ee1fe22f89988ee17ffc731d20984b4cfe877fa7",
+   "size": 126684
+  },
+  {
+   "local": "unitree_ros/meshes/right_thumb_force_sensor_3.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_thumb_force_sensor_3.STL",
+   "git_blob": "57f9055d0a04e82a61bdb234b3132ae619c8c3a0",
+   "size": 294384
+  },
+  {
+   "local": "unitree_ros/meshes/right_thumb_force_sensor_4.STL",
+   "repo": "unitreerobotics/unitree_ros",
+   "commit": "725b59b6de39a26c425632120c89f23c49a36f1e",
+   "path": "robots/g1_description/meshes/right_thumb_force_sensor_4.STL",
+   "git_blob": "1842e2e20f5fb01192eaf8d31f391db53a80ab09",
+   "size": 64584
+  }
+ ]
+}

@@ -1,0 +1,15 @@
+{
+ "comment": "Official Unitree simulator assets (robot/object USD + wholebody locomotion policy). Fetched by scripts/setup/fetch_assets.py from the Hugging Face dataset at the pinned revision and unpacked like the official fetch_assets.sh (into repos/unitree_sim_isaaclab/assets).",
+ "repo": "unitreerobotics/unitree_sim_isaaclab_usds",
+ "revision": "394cf2448f8a9ed815c77c701a761f3d1ff1c8fb",
+ "file": "assets.zip",
+ "size": 1305090539,
+ "sha256": "06fbf14549be3a81e3dbd4a8a019e7f060f48de1556b70f291a18ac8f9ead4b0",
+ "extract_into": "repos/unitree_sim_isaaclab",
+ "expect_files": 423,
+ "verify_sha256": {
+  "assets/model/policy.onnx": "d067b3930041f9bd13c88797bb50ce1c4a5c9ffd4341adc30d11985b3ac71b40",
+  "assets/model/policy1.onnx": "e6b44897d4697782528eac24def13880f6b445be9f3137de667cd14ebd713f2a",
+  "assets/robots/g1-29dof_wholebody_inspire/g1_29dof_with_inspire_rev_1_0.usd": "86047174b87b4df485e996232fb4d2ece5901a9bcd6f9a54b78f961ce664730e"
+ }
+}

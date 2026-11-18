@@ -1,0 +1,105 @@
+# Camera rig = Unitree G1 head stereo (xr_teleoperate Device.md §5.2) + RealSense D405 wrists on Unitree's D405 wrist
+# mount "C" (since 2026-11-12; the Inspire/Brainco ring + 160 deg mono wrist "A" of Unitree's G1_WBT_Inspire_* datasets
+# stays selectable, wrist.mount). Every number and its source: docs/CAMERA_RIG.md.
+# Geometry: src/g1iv_sim/camera_rig.py. Applied by src/g1iv_sim/desk_task.py (cameras) and ext.py (lens).
+standard: unitree_g1_inspire_stereo_head_d405_wrist_c   # wrist.mount below; was ..._mono_wrist (A) until 2026-11-12
+use_rig: true                 # false = official unitree_sim_isaaclab presets (mono head on d435_link, Dex3 wrist offsets)
+resolution: [640, 480]        # per eye / per wrist, as recorded by Unitree (480x640x3, 30 fps)
+lens_distortion: true         # RTX OmniLensDistortionOpenCvPinholeAPI with the calibrated OpenCV coefficients
+
+head:
+  # 60 FPS stereo RGB module, 125 deg diagonal FOV, 60 mm baseline, 3D-printed head bracket
+  # (Classic head 98 mm screw spacing), camera plate tilted 49.3 deg down in the bracket CAD.
+  parent_link: torso_link     # frame of center_xyz / pitch below (the G1 head is a fixed child of torso_link)
+  mount_link: head_link       # camera prims hang under the head link
+  mount_link_in_parent_xyz: [0.0039635, 0.0, -0.044]   # head_link origin in torso_link (URDF head_joint, no rotation)
+  center_xyz: [0.0587, 0.0, 0.4310]   # midpoint of the two optical centres in torso_link [m]: fitted to 14 real G1_WBT_Inspire frames (docs/CAMERA_RIG.md)
+  pitch_down_deg: 47.4        # fitted (bracket CAD plate 49.3, URDF d435_link 47.6); refit 2026-11-12 after the
+                              # silhouette fill fix (was 0.0608/0.4308/46.3 from wireframe masks), 6-DoF fit agrees
+                              # within 2.6 mm / 0.3 deg (y -0.7 mm, yaw 0.5, roll 0.1)
+  yaw_deg: 0.0
+  roll_deg: 0.0
+  right_eye: true             # record both eyes (Unitree keys cam_left_high / cam_right_high)
+  clipping_range: [0.05, 1000.0]
+  # Real G1 head-stereo calibration of the median unit among the 11 calibrated G1 units in Unitree's HF datasets
+  # (unitreerobotics/G1_Dex1_Stack_Block meta/info.json camera_params.head_stereo; that dataset is one of the 12
+  # UnifoLM-VLA training sets). OpenCV pinhole, 640x480 per eye. right_in_left = inverse of the dataset's R, T.
+  # Alternative (Unitree sim default, a G1-D unit): unitree_sim_isaaclab robots/uniclib_calibration.json, see doc.
+  calibration:
+    left:  {width: 640, height: 480, fx: 273.6564937286853, fy: 273.8792623852197, cx: 338.23222240379107, cy: 268.3408430182913,
+            k1: 0.05778880835015045, k2: -0.06161322744667154, p1: 0.006931206331554289, p2: 0.001315369638868191, k3: 0.014016796056652044}
+    right: {width: 640, height: 480, fx: 275.0949436553409, fy: 275.17283346333073, cx: 384.26547361574507, cy: 281.02235481928346,
+            k1: 0.051303001221456146, k2: -0.052291943203902215, p1: 0.006365507353337028, p2: 0.0003630307743378483, k3: 0.010294356344396837}
+    right_in_left: {rvec: [-0.001908, 0.016172, -0.000582], tvec_mm: [58.86, 0.2049, -0.6371]}
+
+wrist:
+  # Active wrist camera model (docs/CAMERA_RIG.md, "손목 카메라"):
+  #   unitree_d405_c        Unitree D405 wrist mount ("C": xr_teleoperate hardware @ 7cd188c, Dex3-1 STEP) + RealSense D405
+  #   inspire_ring_mono160  160 deg monocular camera on Unitree's Inspire/Brainco ring bracket ("A", previous default)
+  # Switch: scripts/run_sim.sh --rig-set wrist.mount=inspire_ring_mono160
+  mount: unitree_d405_c
+  parent_link: {left: left_wrist_yaw_link, right: right_wrist_yaw_link}
+  unitree_d405_c:
+    asset: wrist_d405_mount_c.npz       # mount + half ring + D405 and the D405 colour optical frame in the bracket CAD
+                                        # frame (tools/cad/make_d405_c_asset.py; D405 mesh = realsense-ros, Apache-2.0)
+    cad_variant: {right: a, left: b}    # mirror pair: a = wrist_ring_mount.STEP, b = right_wrist_D405_camera_mount.STEP
+    # Clamp position: bore axis = wrist-yaw housing axis (the housing is an R30.5 cylinder about y = z = 0 for
+    # x = 0..40 mm, USD mesh); half ring mid-plane where the official unitree_sim_isaaclab USD puts Unitree's Dex3 wrist
+    # ring (same R30.4 x 8 mm half ring, ICP 0.003 mm), x = 36.5 mm, i.e. against the hand flange (x = 41.5 mm). The
+    # official USD centres that ring at y = -+3 mm (the hand_base offset); the housing axis is used here instead.
+    # The C sleeve (R30.0, 42.3 mm) then covers x = -1.8..40.5 mm of the housing.
+    clamp_axis_yz_mm: {right: [0.0, 0.0], left: [0.0, 0.0]}
+    ring_mid_x_mm: 36.5                 # real-frame fit, right palm silhouette: 36.3 (16 G1_Dex3_BlockStacking frames)
+    # Bracket turn about the hand axis: CAD +y (clamp -> camera) = (0, cos phi, sin phi) in <side>_wrist_yaw_link.
+    # Fixed by the CAD: mount and half ring carry an internal flat (r 23.88 mm, CAD +x) that keys onto the flat of the
+    # wrist-yaw housing (y = +23.86 mm right / -23.86 left, x 31-36 mm) -> phi = 90: camera on top of the wrist (+z),
+    # radial overlap with the housing <= 0.43 mm (clamp preload 30.5 vs 30.0). Any other turn collides (108: 3.7 mm).
+    # Unitree's Dex3 dataset frames fit better at 108 / 72 (+ ~9 deg pan): a different bracket or hand mounting on that
+    # robot, not reachable with this bracket (docs/CAMERA_RIG.md).
+    phi_deg: {right: 90.0, left: 90.0}
+    cam_correction_deg: [0.0, 0.0, 0.0] # camera-frame rotation on top of the CAD seat. Kept 0 (D405 exactly in the CAD
+                                        # pocket); the real-frame fit prefers ~9 deg extra pan, see docs/CAMERA_RIG.md
+    clipping_range: [0.01, 1000.0]
+    # RealSense D405 colour stream 640x480 (= left imager, depth origin), real calibrations from Unitree's G1 Dex1 datasets
+    # (meta/info.json camera_params.wrist_<side>.color, 16 datasets, 9 left / 7 right physical units; fx 432.9..437.5).
+    # Unit closest to the per-side median. Model "inverse_brown_conrady" = librealsense projects with this polynomial
+    # forward (rs2_project_point_to_pixel), i.e. the OpenCV model with [k1, k2, p1, p2, k3].
+    calibration:
+      left:  {width: 640, height: 480, fx: 433.850372, fy: 433.318634, cx: 322.362091, cy: 242.775818,
+              k1: -0.052048, k2: 0.057723, p1: -0.000823, p2: 0.000219, k3: -0.01832}
+      right: {width: 640, height: 480, fx: 434.364014, fy: 433.805359, cx: 323.70163, cy: 243.14801,
+              k1: -0.052987, k2: 0.059649, p1: -0.000029, p2: 0.001329, k3: -0.020151}
+  inspire_ring_mono160:
+    # 60 FPS / 160 deg monocular wrist camera on the Inspire/Brainco ring bracket (g1-wrist/inspire_or_brainco),
+    # ring clamped on the wrist-yaw housing next to the wrist/hand seam, camera on the palm side looking at the fingers.
+    axial_x: 0.0380             # optical centre along the hand axis from the wrist_yaw_link origin [m]
+    radial_offset: 0.0305       # optical centre from the wrist axis (lens hole of the bracket CAD) [m]
+    z_offset: 0.0
+    outward_tilt_deg: -5.0      # optical axis turned 5 deg towards the hand axis (bracket CAD; real-frame fit)
+    tangential_tilt_deg: 0.0
+    roll_deg: 0.0
+    clipping_range: [0.01, 1000.0]   # fingers are a few cm in front of the lens
+    calibration:                # same wide-angle wrist camera model, real robot calibration (uniclib, 2026-11-04)
+      left:  {width: 640, height: 480, fx: 426.8286444020723, fy: 427.1156049600648, cx: 310.4166162889969, cy: 233.82760424829794,
+              k1: -0.39718897352739013, k2: 0.20925348009816414, p1: 0.0033282832894254606, p2: -0.000713546676220878, k3: -0.06327267252460228}
+      right: {width: 640, height: 480, fx: 418.428912796385, fy: 418.6581527172839, cx: 305.9966082245748, cy: 233.10207534359105,
+              k1: -0.38220075140128873, k2: 0.17468956617958936, p1: -0.0004634413779720019, p2: 0.00026566968480625625, k3: -0.042308198587675136}
+
+hardware_visuals:             # visual-only camera hardware (camera_rig.apply_rig_hardware), seen by the head cameras
+  hide_official_hand_camera_base: true   # official USD carries a ~10 cm D405-type bracket the Inspire robots do not have
+  wrist_brackets: true        # Unitree Inspire/Brainco ring bracket CAD -> assets/camera_rig/inspire_wrist_bracket_*.npz
+  head_bracket: true          # Unitree head stereo bracket CAD (60 FPS, Classic head 98 mm), aligned to the head cameras
+  head_bracket_asset: head_stereo_bracket_60fps_classic98_cad.npz
+  # Camera modules (maker/CAD not public: Taobao-only, login wall). Built from what is known: M12 board lenses
+  # (Unitree, xr_teleoperate #132/#45: head 125 deg "no distortion" 2.96 mm, wrist 160 deg 3.15 mm) and the board
+  # screw patterns in Unitree's bracket STEP (head 85.0 x 28.2 mm on the camera plate front face, 10.25 mm behind the
+  # lens-hole plane; wrist 16.7 x 10.8 mm, ~10 mm behind). Distances along the optical axis from the optical centre.
+  camera_modules:
+    head:  {board_mm: [90.0, 33.0, 1.6], board_behind_mm: 9.45, holder_mm: [16.0, 16.0, 8.6], holder_behind_mm: 4.35, lens_d_mm: 14.0, lens_len_mm: 8.0, lens_front_mm: 4.0}
+    wrist: {board_mm: [21.0, 15.0, 1.6], board_behind_mm: 9.2, holder_mm: [12.0, 12.0, 7.4], holder_behind_mm: 4.7, lens_d_mm: 14.0, lens_len_mm: 4.0, lens_front_mm: 1.0}
+
+gui_panel:                    # GUI only: the four policy camera images docked under the viewport (no extra rendering)
+  enabled: true
+  every_n_steps: 2            # refresh every n control steps
+  height_ratio: 0.30          # share of the viewport area
+

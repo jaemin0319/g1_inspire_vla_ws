@@ -1,0 +1,100 @@
+# Teleop hub (src/g1iv_teleop/hub.py). One process owns every upper-body / hand / walking command
+# so that no joint and no topic has two independent writers.
+
+rate_hz: 50.0                 # hub loop (IK, hand, walking command, meta). Arm lowcmd thread: 250 Hz (official).
+
+arm_source: mock              # pico | mock | scripted | none   (none = hold home pose)
+loco_source: keyboard         # keyboard | xr | none  -- exactly ONE walking input is active
+console: true                 # pygame status window (also the keyboard input; keys only when it has focus)
+
+xr:
+  # Official televuer (WebXR) settings, used when arm_source = pico.
+  input_mode: controller      # controllers only; finger hand-tracking is out of scope
+  display_mode: immersive     # immersive | ego | pass-through
+  arm_reference_mode: head_yaw
+  img_server_ip: 127.0.0.1    # teleimager image server in the sim process (same PC)
+  stale_timeout_s: 0.5        # no new pose sample for this long => input LOST (hold arms + hands)
+
+arm:
+  # Relative (clutched) mapping: target = T_ee_at_engage * (T_ctrl_at_engage^-1 * T_ctrl_now)
+  # expressed in the IK frame (waist-attached, moves with the robot body while walking).
+  position_scale: 1.0
+  rotation: true              # follow controller orientation deltas
+  max_ee_offset_m: 0.45       # clamp |target - engage_anchor| (workspace guard)
+  max_joint_vel_rad_s: 1.5    # rate limit applied to IK output before sending (sim mode has none upstream)
+  max_joint_step_on_engage_rad: 0.02
+  home_on_disengage: false    # false = hold last valid target when disengaged
+  ik_fail_policy: hold_last_valid   # hold_last_valid  (logged)
+  home_q:                     # official G1_29 default arm pose (shoulder pitch/roll/yaw, elbow, wrist r/p/y)
+    left:  [0.35, 0.18, 0.0, 0.87, 0.0, 0.0, 0.0]
+    right: [0.35, -0.18, 0.0, 0.87, 0.0, 0.0, 0.0]
+
+hands:
+  preset_file: configs/hands_inspire.yaml
+  trigger_close_threshold: 0.60   # pressed fraction (0 = released, 1 = fully pressed)
+  trigger_open_threshold: 0.40    # hysteresis band
+  max_rate_per_s: 2.0             # normalised Inspire units per second (OPEN<->CLOSE in ~0.5 s)
+  on_input_lost: hold             # hold = keep current OPEN/CLOSE (do not drop objects)
+  trigger_confirm_s: 0.05         # commit a trigger transition only after it persisted this long AND a newer
+                                  # controller pose arrived (a freezing link that reports trigger=0 never opens)
+
+loco:
+  publish_hz: 200.0               # wall Hz. The policy resets the command to [0,0,0,0.8] after every read: without
+                                  # cameras the sim runs at RTF ~1-2 and a 50 Hz stream left about half of the policy
+                                  # reads at the default (measured 2026-11-17); 200 Hz covers RTF <= ~3
+  height_default: 0.80            # official policy height command
+  limits:                         # official send_commands_keyboard.py ranges
+    vx: [-0.6, 1.0]
+    vy: [-0.5, 0.5]
+    wz: [-1.57, 1.57]
+  # Measured 2026-11-11 (tools/loco_cmd_test.py, official scene, logs/checks/status_loco_*.json): the official
+  # wholebody policy only steps for |vy| >= ~0.5 m/s, wz >= ~1.2 rad/s, vx <= ~-0.4 m/s; smaller commands only
+  # sway the body (it returns to the start pose). Hence full official magnitudes for keys / full stick.
+  keyboard:
+    vx_fwd: 0.5
+    vx_back: 0.6
+    vy: 0.5
+    wz: 1.57
+    accel: 1.5                    # m/s^2 (or rad/s^2) ramp while a key is held
+    decel: 4.0                    # ramp to zero after release
+    stop_on_focus_loss: true
+  xr:
+    deadzone: 0.15
+    vx_max: 0.6                   # full stick; |vx| < ~0.3 does not step reliably
+    vy_max: 0.5
+    wz_max: 1.57
+    stale_timeout_s: 0.3
+
+buttons:
+  # Logical action -> controller element. Verify on the real PICO with scripts/run_pico_teleop.sh --diag.
+  engage_toggle: left_a           # left X button (televuer reports it as left aButton)
+  recenter: left_b                # left Y button
+  clutch_left: left_squeeze       # hold = pause left arm following; release re-anchors (no jump)
+  clutch_right: right_squeeze
+  hand_left: left_trigger
+  hand_right: right_trigger
+  record_toggle_success: right_a  # start; stop + label success
+  record_stop_failure: right_b    # stop + label failure
+  emergency_stop: both_thumbsticks  # zero walking command + disengage arms
+
+keyboard_keys:                    # console window (pygame) keys; arrows also work for walking
+  walk_forward: w
+  walk_back: s
+  walk_left: a
+  walk_right: d
+  turn_left: q
+  turn_right: e
+  stop: space
+  engage_toggle: r
+  recenter: c
+  hand_left_toggle: z
+  hand_right_toggle: x
+  hand_both_toggle: b
+  arm_nudge: [i, k, j, l, u, o]   # +x -x +y -y +z -z on the selected arm (1 cm steps, engaged only)
+  arm_select: tab
+  record_start: "1"
+  record_stop_success: "2"
+  record_stop_failure: "3"
+  record_abort: "4"
+  reset_env: "0"
+  quit: escape

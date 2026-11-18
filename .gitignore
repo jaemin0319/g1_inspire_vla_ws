@@ -1,0 +1,30 @@
+# environments, caches, downloads
+.conda/
+.cache/
+__pycache__/
+*.pyc
+# external repositories (pinned by envs/repos.lock.json; project patches in envs/patches/)
+repos/
+# data, weights, recordings, large logs
+data/raw/
+data/processed/
+data/smoke/
+# downloaded Unitree datasets / CAD / exported meshes (re-creatable, docs/CAMERA_RIG.md)
+data/reference/
+# generated robot/hand assets (re-creatable from data/reference, docs/HAND_RH56E2.md)
+data/assets/
+policies/*.onnx
+policies/*.pt
+logs/
+*.mp4
+*.npz
+# small derived bracket meshes used by the simulator are tracked
+!assets/camera_rig/*.npz
+# certificates / private keys
+certs/
+*.key
+*.pem
+# machine-local tool settings / caches
+envs/claude_permissions_fragment.json
+.pytest_cache/
+.assets_unpack/

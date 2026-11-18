@@ -1,0 +1,77 @@
+{
+ "Isaac-GR00T": {
+  "remote": "https://github.com/NVIDIA/Isaac-GR00T.git",
+  "commit": "3b49067943eb1ab2eb2203b93d461c4390c78da3",
+  "branch": "main",
+  "describe": "3b49067",
+  "dirty_files": [],
+  "submodules": [
+   "-8f1084e3132a39270c3a13ebe37270a43ece2a01 external_dependencies/LIBERO",
+   "-8a2d286c926c1371927caa7651a412b4cc331756 external_dependencies/SimplerEnv",
+   "-d89d481ce9c76da7f179466981676e268aa842e5 external_dependencies/robocasa",
+   "-4840e671596f93ca03651524b9f72ffb1aadfeff external_dependencies/robocasa-gr1-tabletop-tasks"
+  ]
+ },
+ "IsaacLab": {
+  "remote": "https://github.com/isaac-sim/IsaacLab.git",
+  "commit": "80094be3245aa5c8376a7464d29cb4412ea518f5",
+  "branch": "g1iv/isaaclab-80094be",
+  "describe": "v2.3.2-7-g80094be32",
+  "dirty_files": [],
+  "submodules": []
+ },
+ "unitree_lerobot": {
+  "remote": "https://github.com/unitreerobotics/unitree_lerobot.git",
+  "commit": "41c2805742de879ddab2d8d6beaeaf215f876395",
+  "branch": "main",
+  "describe": "v3.0-14-g41c2805",
+  "dirty_files": [],
+  "submodules": [
+   "a5b29d430105f5235eb05bbf2db5a0d747a869d6 unitree_lerobot/lerobot (v0.4.1)"
+  ]
+ },
+ "unitree_sdk2_python": {
+  "remote": "https://github.com/unitreerobotics/unitree_sdk2_python.git",
+  "commit": "814556d15970dd2ecf1c9984e845ca02ab07e206",
+  "branch": "master",
+  "describe": "814556d",
+  "dirty_files": [],
+  "submodules": []
+ },
+ "unitree_sim_isaaclab": {
+  "remote": "https://github.com/unitreerobotics/unitree_sim_isaaclab.git",
+  "commit": "e30c25b1dffdf92ada1d6c8c1fe9a47bdde0fecc",
+  "branch": "g1iv/isaacsim5.1",
+  "describe": "IsaacSim<=5.1.0",
+  "dirty_files": [
+   "M dds/dds_master.py",
+   " M sim_main.py",
+   " M tasks/utils/__pycache__/__init__.cpython-311.pyc",
+   " M tasks/utils/__pycache__/importer.cpython-311.pyc",
+   " M tasks/utils/__pycache__/parse_cfg.cpython-311.pyc"
+  ],
+  "submodules": [
+   "b81de448bca9c696d7ce145f4af71c66146d0b69 teleimager (b81de44)"
+  ]
+ },
+ "xr_teleoperate": {
+  "remote": "https://github.com/unitreerobotics/xr_teleoperate.git",
+  "commit": "817fb00c63cde15e5f24a0f8fa08e1e33ed89d3b",
+  "branch": "main",
+  "describe": "v1.5-40-g817fb00",
+  "dirty_files": [],
+  "submodules": [
+   "d7753d38c9ff11f80bafea6cd168351fd3db9b0e teleop/robot_control/dex-retargeting (heads/unitree)",
+   " 57cf2a40572227273fa001cd17833b755331ec97 teleop/teleimager (v1.6.1)",
+   " 766de45e74373ae0ea66321d942ce538385655a5 teleop/televuer (v1.0-23-g766de45)"
+  ]
+ },
+ "_assets": {
+  "source": "hf datasets/unitreerobotics/unitree_sim_isaaclab_usds assets.zip",
+  "revision": "394cf2448f8a9ed815c77c701a761f3d1ff1c8fb 06fbf14549be3a81e3dbd4a8a019e7f060f48de1556b70f291a18ac8f9ead4b0",
+  "policy_sha256": [
+   "d067b3930041f9bd13c88797bb50ce1c4a5c9ffd4341adc30d11985b3ac71b40  assets/model/policy.onnx",
+   "e6b44897d4697782528eac24def13880f6b445be9f3137de667cd14ebd713f2a  assets/model/policy1.onnx"
+  ]
+ }
+}

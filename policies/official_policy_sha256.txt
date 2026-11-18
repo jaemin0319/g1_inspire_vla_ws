@@ -1,0 +1,2 @@
+d067b3930041f9bd13c88797bb50ce1c4a5c9ffd4341adc30d11985b3ac71b40  assets/model/policy.onnx
+e6b44897d4697782528eac24def13880f6b445be9f3137de667cd14ebd713f2a  assets/model/policy1.onnx

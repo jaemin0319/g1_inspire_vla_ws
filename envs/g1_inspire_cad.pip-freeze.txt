@@ -1,0 +1,12 @@
+networkx==3.7
+numpy==2.5.4
+opencv-python-headless==5.0.0.93
+packaging @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_packaging_1785888127/work
+pip @ file:///home/conda/feedstock_root/build_artifacts/pip_1793659322676/work
+PyYAML==6.0.3
+rtree==1.4.1
+scipy==1.18.1
+setuptools==84.2.1
+shapely==2.2.0
+trimesh==5.2.0
+wheel==0.48.0
