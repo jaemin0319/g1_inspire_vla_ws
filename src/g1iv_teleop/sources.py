@@ -354,11 +354,13 @@ class ScriptedGraspSource(MockSource):
                 self.phase, self.t_phase = name, t
                 self._T_from = None
 
-        if self.phase == "wait" and t > 1.0:
+        # grasp_wait_s / engage_s (plan, default 1.0 / 0.5 s): idle before the arm engages. Shorter values cut the
+        # standing-still frames between arriving and reaching (scripted_walk_far_grasp_desk065.yaml).
+        if self.phase == "wait" and t > float(self.plan.get("grasp_wait_s", 1.0)):
             goto("engage", 0)
         if self.phase == "engage":
             f.left_ctrl_aButton = (t - self.t_phase) < 0.15
-            if anchors.get(side) is not None and (t - self.t_phase) > 0.5:
+            if anchors.get(side) is not None and (t - self.t_phase) > float(P.get("engage_s", 0.5)):
                 obj = self._obj_in_pelvis(status)
                 desk_err = _desk_mismatch(P, status) or _target_mismatch(P, status)
                 if obj is None:
@@ -597,12 +599,31 @@ class ScriptedWalkGraspSource(ScriptedGraspSource):
         elif self.nav == "walk":
             ramp = min(1.0, dt_ph / float(W.get("ramp_s", 0.3)))
             wmax = float(W.get("wz_walk_max", 0.8))
-            if W.get("lateral_mode", "holonomic") == "holonomic":
+            mode = W.get("lateral_mode", "holonomic")
+            if mode in ("holonomic", "pursuit"):
                 # face the goal yaw all the way (yaw-rate feedback works while stepping) and remove the cross-track
                 # error with a sideways component (also works while stepping; in place |vy| < 0.5 does not step)
-                wz = float(np.clip(-float(W.get("k_yaw", 2.0)) * yerr, -wmax, wmax))
                 vy_g = float(np.clip(-float(W.get("k_lat", 3.0)) * e, -W.get("vy_walk_max", 0.5), W.get("vy_walk_max", 0.5)))
                 vx_g = ramp * float(W.get("vx_walk", 0.5))
+                psi_t = 0.0
+                if mode == "pursuit":
+                    # large sideways offsets (2026-11-23, robot starts up to 1 m left/right of the desk centre):
+                    # walk TOWARDS an approach point pursuit_pre_m behind the stand pose (goal frame), so the cross
+                    # error and the remaining distance vanish together, turning the body towards the walking
+                    # direction (forward walking is the policy's strong mode; heading limited to pursuit_heading_max)
+                    # and covering the rest of the direction with a sideways component. Blended into the holonomic
+                    # law above as |cross| drops from pursuit_blend_m[1] to [0], so near the line nothing changes.
+                    pre = float(W.get("pursuit_pre_m", 0.45))
+                    b0, b1 = (float(v) for v in W.get("pursuit_blend_m", [0.05, 0.20]))
+                    w = float(np.clip((abs(e) - b0) / max(b1 - b0, 1e-6), 0.0, 1.0))
+                    r = max(-s - pre, 0.05)
+                    a = float(np.arctan2(-e, r))                     # walking direction in the goal frame
+                    v = ramp * float(W.get("vx_walk", 0.5))
+                    vx_g = w * v * np.cos(a) + (1.0 - w) * vx_g
+                    vy_g = w * v * np.sin(a) + (1.0 - w) * vy_g
+                    hmax = np.radians(float(W.get("pursuit_heading_max_deg", 45.0)))
+                    psi_t = w * float(np.clip(a, -hmax, hmax))
+                wz = float(np.clip(-float(W.get("k_yaw", 2.0)) * _wrap(yerr - psi_t), -wmax, wmax))
                 c, sn = np.cos(yerr), np.sin(yerr)                 # goal frame -> robot frame
                 vx, vy = c * vx_g + sn * vy_g, -sn * vx_g + c * vy_g
             else:

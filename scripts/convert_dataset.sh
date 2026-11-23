@@ -10,4 +10,5 @@ PY=$(g1iv_py g1_inspire_data)
 [[ -x "$PY" ]] || { echo "env g1_inspire_data missing: scripts/setup_envs.sh data" >&2; exit 1; }
 "$PY" -m g1iv_data.convert_lerobot "$@"
 NAME=$(sed -n 's/.*--name[ =]\([^ ]*\).*/\1/p' <<<"$*")
-[[ -n "$NAME" ]] && "$PY" -m g1iv_data.check_loader "data/processed/${NAME}_lerobot_v21" --report "logs/validate/loader_${NAME}.json"
+OUT_ROOT=$(sed -n 's/.*--out-root[ =]\([^ ]*\).*/\1/p' <<<"$*")
+[[ -n "$NAME" ]] && "$PY" -m g1iv_data.check_loader "${OUT_ROOT:-data/processed}/${NAME}_lerobot_v21" --report "logs/validate/loader_${NAME}.json"

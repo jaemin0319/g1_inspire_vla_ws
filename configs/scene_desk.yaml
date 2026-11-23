@@ -125,6 +125,11 @@ cameras:
     sensor: true              # false: viewport view only, no world_camera sensor (no extra 640x480 render product)
     pos: [-0.6, -1.6, 1.6]
     look_at: [1.0, 0.0, 0.7]
+    width: 640                # world_camera sensor size / focal length (horizontal aperture 20 mm; 12 mm = 80 deg)
+    height: 480
+    focal_length: 12.0
+    # G1IV_OBSERVER_VIDEO=<dir> writes this camera to <dir>/<episode_id>_observer.mp4 for every recorded episode
+    # (src/g1iv_sim/observer_video.py; front view of a policy rollout: docs/ACT_EVAL.md)
 
 # Demo mode = real-time viewing, no camera data, nothing to record: scripts/run_sim.sh --demo
 #   = cameras.policy=[] + cameras.observer.sensor=false + cameras.image_server_stream=false

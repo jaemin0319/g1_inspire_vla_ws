@@ -16,6 +16,12 @@ observation.state stays the 26 arm/hand joints. Dropped (not consumed by ACT, wo
 action.loco_cmd, action.hand_binary, observation.base_vel, observation.sim_time, observation.wall_time.
 eval.* columns are kept (not observation./action. keys, so policies ignore them).
 
+--loco-loss-weight K (default 1): LeRobot ACT has no per-dimension loss weights; its L1 loss is taken on MEAN_STD
+normalised actions. Dividing the stored std of the three loco dims by K makes their normalised targets K times larger,
+i.e. the same as weighting their L1 loss by K, while the policy's postprocessor (saved with the checkpoint, built from
+the same stats.json) still turns the outputs back into m/s, rad/s. Only meta/stats.json is changed (per-episode stats
+stay true); the factor is written to meta/g1iv_act_provenance.json (LeRobot warns about extra info.json keys).
+
 Steps: copy -> official v2.1->v3.0 converter (lerobot.scripts.convert_dataset_v21_to_v30, no push) -> rewrite
 data parquet + info.json -> recompute action stats (per episode in meta/episodes and global stats.json, same
 min/max/mean/std/count fields) -> checks -> rename into place.
@@ -49,6 +55,8 @@ def main() -> int:
     ap.add_argument("--out", type=Path, default=None)
     ap.add_argument("--repo-id", default=None, help="only used as the dataset name (default: local/<out name>)")
     ap.add_argument("--overwrite", action="store_true")
+    ap.add_argument("--loco-loss-weight", type=float, default=1.0,
+                    help="effective L1 weight of the loco dims (std of action[26:29] in stats.json divided by this)")
     a = ap.parse_args()
 
     from lerobot.datasets.compute_stats import aggregate_stats
@@ -141,12 +149,27 @@ def main() -> int:
         np.testing.assert_allclose(got[26:], np.asarray(s_old["action.loco_cmd"][f])[:3], rtol=1e-4, atol=1e-5)
     item = ds[0]
     assert item["action"].shape == (29,) and not any(k in item for k in DROP)
+    k_loco = float(a.loco_loss_weight)
+    if k_loco != 1.0:
+        assert k_loco > 0
+        st = {k: {f: np.asarray(v) for f, v in d.items()} for k, d in ds.meta.stats.items()}
+        st["action"]["std"] = st["action"]["std"].astype(np.float64).copy()
+        st["action"]["std"][26:29] /= k_loco
+        write_stats(st, work)
+        chk = LeRobotDataset(repo_id=repo_id, root=work).meta.stats["action"]["std"]
+        true_std = np.asarray(ds.meta.stats["action"]["std"])          # loaded before the rewrite
+        np.testing.assert_allclose(np.asarray(chk)[26:29] * k_loco, true_std[26:29], rtol=1e-5)
+        np.testing.assert_allclose(np.asarray(chk)[:26], true_std[:26], rtol=1e-6)
     (work / "meta/g1iv_act_provenance.json").write_text(json.dumps({
         "tool": "tools/make_act_dataset.py", "source": src.name, "source_codebase_version": "v2.1",
         "action": "action[0:26] = source action; action[26:29] = source action.loco_cmd[0:3] (vx, vy, wz)",
         "loco_cmd_runtime": "send [vx, vy, wz, 0.8] on rt/run_command/cmd; the sim provider zeroes the command after "
                             "every read, so republish faster than the 50 Hz locomotion step",
-        "dropped": DROP}, indent=1))
+        "dropped": DROP,
+        "loco_loss_weight": k_loco,
+        "stats_note": ("stats.json action std[26:29] divided by loco_loss_weight (loss weighting); true std = stored x "
+                       "loco_loss_weight; per-episode stats in meta/episodes are unscaled") if k_loco != 1.0 else None},
+        indent=1))
     work.rename(out)
     print(f"[make_act_dataset] {out}: {ds.meta.total_episodes} episodes, {ds.meta.total_frames} frames, "
           f"action 29 = 26 joints + {LOCO_NAMES}, state {ds.meta.features['observation.state']['shape']}, "

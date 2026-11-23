@@ -35,6 +35,8 @@ from g1iv_common import hand_model as HM
 from g1iv_common.hands import CHANNELS, norm_to_rad, preset_vector
 
 from . import desk_task as g1iv_tasks  # noqa: F401  (registers the project task id)
+from .observer_video import ObserverVideo
+from .policy_bridge import PolicyBridge
 from .recorder import EpisodeRecorder, FramePairer
 
 # Diagnostics: "kill -USR1 <sim pid>" prints every thread's Python stack to the sim log (for hangs).
@@ -106,6 +108,8 @@ class G1IVExt:
         self._marks: list = []
         self._episode_extra: dict = {}
         self.pairer = None
+        self.bridge = None
+        self.obs_video = None
 
     # ================================================================== hooks
     def on_env_created(self, env, env_cfg, args):
@@ -151,6 +155,19 @@ class G1IVExt:
         self.pairer = FramePairer(int(self.rcfg["record_every_n_steps"]))
         self.rec = EpisodeRecorder(ws_path(self.rcfg["raw_root"]), ws_path(self.rcfg["smoke_root"]),
                                    self.rcfg["smoke_sources"], self.rcfg["jpeg_quality"], self.rcfg["writer_queue_max"])
+        if os.environ.get("G1IV_POLICY_BRIDGE"):  # learned-policy rollouts (tools/run_act_policy.py), lockstep
+            self.bridge = PolicyBridge(os.environ["G1IV_POLICY_BRIDGE"],
+                                       float(os.environ.get("G1IV_POLICY_BRIDGE_TIMEOUT", "60")))
+        if os.environ.get("G1IV_OBSERVER_VIDEO"):  # observer-camera video per recorded episode (viewing only)
+            if "world_camera" in env.scene.keys():
+                ob = self.scn.get("cameras", {}).get("observer", {})
+                self.obs_video = ObserverVideo(
+                    ws_path(os.path.expanduser(os.environ["G1IV_OBSERVER_VIDEO"])),
+                    1.0 / (self.control_dt * int(self.rcfg["record_every_n_steps"])),
+                    camera_info={k: ob.get(k) for k in ("pos", "look_at", "width", "height", "focal_length")})
+                print(f"[g1iv] observer video on -> {self.obs_video.dir}")
+            else:
+                print("[g1iv] G1IV_OBSERVER_VIDEO set but there is no world_camera sensor (demo mode?): no video")
         self.static_meta = self._static_meta()
         (WS / "logs").mkdir(exist_ok=True)
         (WS / "logs" / "sim_static_meta.json").write_text(json.dumps(self.static_meta, indent=1))
@@ -193,11 +210,13 @@ class G1IVExt:
         self.sub_ctrl.Init(lambda m: self._ctrl_q.append(m.data), 32)
         self.sub_meta = ChannelSubscriber(topics.T_TELEOP_META, String_)
         self.sub_meta.Init(self._on_meta, 32)
-        # observer camera: slow updates only (preview); policy cameras untouched
+        # observer camera: slow updates only (preview), or every recorded frame with G1IV_OBSERVER_VIDEO;
+        # policy cameras untouched
         if "world_camera" in env.scene.keys():
+            per = self.control_dt * int(self.rcfg["record_every_n_steps"]) if self.obs_video is not None else 0.5
             try:
-                env.scene["world_camera"].cfg.update_period = 0.5
-                env.scene["world_camera"]._update_period = 0.5  # sim_main set it to 1e6 when excluded
+                env.scene["world_camera"].cfg.update_period = per
+                env.scene["world_camera"]._update_period = per  # sim_main set it to 1e6 when excluded
             except Exception as e:  # noqa: BLE001
                 print(f"[g1iv] observer camera period not set: {e}")
         # Deterministic start: the official provider uses a 0 arm target until the first rt/lowcmd arrives
@@ -236,6 +255,8 @@ class G1IVExt:
                 self._pending_obs = None
             if capture:  # next step is a record step -> observe now
                 self._pending_obs = self._capture_obs(st)
+                self._grab_observer()
+                self._bridge_send()
             if st["fallen"] and not self._episode_extra.get("fell"):
                 self._episode_extra["fell"] = True
                 self._episode_extra["fell_at_sim_time"] = st["sim_time"]
@@ -434,6 +455,8 @@ class G1IVExt:
         print(f"[g1iv] hand appearance: {n} visual prims re-coloured ({', '.join(sorted(mats))})", flush=True)
 
     def on_shutdown(self):
+        if self.bridge is not None:
+            self.bridge.close()
         if self.rec.active:
             self._stop_episode("aborted", "sim_shutdown")
         # Close the project's DDS entities explicitly (the official code stops its own DDS objects). Leaving
@@ -631,6 +654,48 @@ class G1IVExt:
         self._pending_obs = self._capture_obs(self._read_state())
         self._marks, self._episode_extra = [], {}
         print(f"[g1iv] recording -> {d}")
+        if self.obs_video is not None:
+            self.obs_video.start(self.rec.meta.get("episode_id", f"episode{self.episode_index}"))
+            self._grab_observer()
+        self._bridge_send()
+
+    def _grab_observer(self):
+        """G1IV_OBSERVER_VIDEO: observer image at the instant of the observation just captured (never a policy input)."""
+        if self.obs_video is None or not self.obs_video.active:
+            return
+        try:
+            cam = self.env.scene["world_camera"]
+            try:
+                cam._is_outdated[:] = True   # same forced read-back as _capture_obs: the render of this step
+            except Exception:  # noqa: BLE001
+                pass
+            self.obs_video.add(cam.data.output["rgb"][0][..., :3].cpu().numpy())
+        except Exception as e:  # noqa: BLE001  (viewing aid: never stop an episode)
+            print(f"[g1iv] observer video frame failed, video off: {e}", flush=True)
+            self.obs_video.stop({"outcome": "video_error", "error": repr(e)})
+            self.obs_video = None
+
+    def _bridge_send(self):
+        """Policy bridge (G1IV_POLICY_BRIDGE): hand the observation just captured for the next record step to the
+        connected policy runner and wait until it has published its commands (lockstep, see policy_bridge.py)."""
+        if self.bridge is None or self._pending_obs is None or not self.rec.active:
+            return
+        policy_episode = self.rec.meta.get("source") == "policy"
+        if not self.bridge.connected:
+            if policy_episode:   # the runner is gone: nobody commands the robot any more -> do not record forever
+                self._stop_episode("aborted", "policy_runner_lost")
+            return
+        obs, imgs, _deps, t = self._pending_obs
+        ev = t.get("eval", {})
+        meta = {"step": self.step, "sim_time": t["sim_time"], "episode_id": self.rec.meta.get("episode_id"),
+                "frame": self.rec.n_frames, "arm_q": obs["arm_q"], "hand_q_norm": obs["hand_q_norm"],
+                "base_pos_w": obs["base_pos_w"],
+                "eval": {k: ev.get(k) for k in ("object_lift_m", "fallen", "object_pos_w", "target", "contact_force_total")}}
+        reply = self.bridge.exchange(meta, imgs)
+        if reply is None and policy_episode:
+            self._stop_episode("aborted", "policy_runner_lost")
+        elif reply and reply.get("stop"):
+            self._stop_episode(reply["stop"], reply.get("reason", "policy_runner"))
 
     def _stop_episode(self, outcome: str, reason: str):
         if not self.rec.active:
@@ -642,6 +707,10 @@ class G1IVExt:
         self._pending_obs = None
         self.pairer.stop()
         print(f"[g1iv] episode saved: {out}")
+        if self.obs_video is not None and self.obs_video.active:
+            self.obs_video.stop({"episode_id": self.rec.meta.get("episode_id"), "outcome": outcome, "end_reason": reason,
+                                 "recorded_frames": self.rec.meta.get("n_frames"),
+                                 "target_object": self.rec.meta.get("target_object")})
 
     def _full_reset(self, m: dict):
         env, robot = self.env, self.robot

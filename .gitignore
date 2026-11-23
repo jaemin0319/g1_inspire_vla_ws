@@ -9,6 +9,8 @@ repos/
 data/raw/
 data/processed/
 data/smoke/
+# learned-policy rollout recordings (scripts/run_act_eval.sh, docs/ACT_EVAL.md)
+data/policy_eval/
 # downloaded Unitree datasets / CAD / exported meshes (re-creatable, docs/CAMERA_RIG.md)
 data/reference/
 # generated robot/hand assets (re-creatable from data/reference, docs/HAND_RH56E2.md)

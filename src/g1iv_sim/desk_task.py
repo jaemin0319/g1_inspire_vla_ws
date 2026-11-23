@@ -272,8 +272,10 @@ class G1IVDeskSceneCfg(ObjectTableSceneCfg):
     # sim_main.py excludes from per-step updates by default (--camera_exclude world_camera).
     world_camera = CameraCfg(
         prim_path="/World/PerspectiveCamera",
-        update_period=0.5, height=480, width=640, data_types=["rgb"],
-        spawn=sim_utils.PinholeCameraCfg(focal_length=12.0, horizontal_aperture=20.0, clipping_range=(0.05, 100.0)),
+        update_period=0.5, height=int(_observer.get("height", 480)), width=int(_observer.get("width", 640)),
+        data_types=["rgb"],
+        spawn=sim_utils.PinholeCameraCfg(focal_length=float(_observer.get("focal_length", 12.0)), horizontal_aperture=20.0,
+                                         clipping_range=(0.05, 100.0)),
         offset=CameraCfg.OffsetCfg(pos=tuple(_observer.get("pos", (-0.6, -1.6, 1.6))),
                                    rot=look_at_quat_world(_observer.get("pos", (-0.6, -1.6, 1.6)),
                                                           _observer.get("look_at", (1.0, 0.0, 0.7))),
