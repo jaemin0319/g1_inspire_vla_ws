@@ -16,6 +16,8 @@ evaluation labels are kept as SEPARATE columns (not inside "action"):
   action.hand_binary (2: L, R; 1=CLOSE, -1=unknown) , action.loco_cmd (4: vx, vy, wz, height)
   observation.base_vel (6: lin_b xyz, ang_b xyz) , observation.sim_time (1) , observation.wall_time (1)
   eval.object_pos_w (3) , eval.contact_force_total (1) , eval.fallen (1)    <- NOT policy inputs
+  eval.robot_pose_w (3: pelvis x, y, yaw) , eval.phase (1: scripted phase id, PHASE_ID, -1 = none)
+  eval.all_object_pos_w (9: red, blue, green xyz; only when every episode has several cylinders)
 
   python -m g1iv_data.convert_lerobot data/raw/20261111 --name g1iv_pick_v1 [--include-outcomes success]
 """
@@ -99,7 +101,9 @@ def pack26(arm14, hand12_dfx):
     return np.concatenate([arm14[ARM_L], arm14[ARM_R], hand12_dfx[HAND_L_DFX], hand12_dfx[HAND_R_DFX]]).astype(np.float32)
 
 
-def features(h: int, w: int, cams: list[str]) -> dict:
+def features(h: int, w: int, cams: list[str], multi_obj: bool = False) -> dict:
+    """multi_obj: every episode has several cylinders -> also eval.all_object_pos_w (left out for one-cylinder data,
+    where it would be NaN only)."""
     vid = {"dtype": "video", "shape": (h, w, 3), "names": ["height", "width", "channels"]}
     f = {"observation.state": {"dtype": "float32", "shape": (26,), "names": MOTORS},
          "action": {"dtype": "float32", "shape": (26,), "names": MOTORS},
@@ -110,7 +114,12 @@ def features(h: int, w: int, cams: list[str]) -> dict:
          "observation.wall_time": {"dtype": "float64", "shape": (1,), "names": None},
          "eval.object_pos_w": {"dtype": "float32", "shape": (3,), "names": ["x", "y", "z"]},
          "eval.contact_force_total": {"dtype": "float32", "shape": (1,), "names": None},
-         "eval.fallen": {"dtype": "float32", "shape": (1,), "names": None}}
+         "eval.fallen": {"dtype": "float32", "shape": (1,), "names": None},
+         "eval.robot_pose_w": {"dtype": "float32", "shape": (3,), "names": ["x", "y", "yaw"]},
+         "eval.phase": {"dtype": "int64", "shape": (1,), "names": None}}
+    if multi_obj:
+        f["eval.all_object_pos_w"] = {"dtype": "float32", "shape": (9,),
+                                      "names": [f"{n}_{c}" for n in OBJ_ORDER for c in "xyz"]}
     for a in cams:
         f[f"observation.images.{CAM_KEYS[a]}"] = dict(vid)
     return f
@@ -123,7 +132,19 @@ def _binary(tel: dict) -> np.ndarray:
     return np.array([1.0 if hc.get("left") == "CLOSE" else 0.0, 1.0 if hc.get("right") == "CLOSE" else 0.0], np.float32)
 
 
-def frame_from_row(d: Path, row: dict, cams: list[str]) -> dict:
+OBJ_ORDER = ("red", "blue", "green")    # eval.all_object_pos_w order (scene_desk.yaml)
+# eval.phase: scripted-expert phase (hub meta "phase", src/g1iv_teleop/sources.py); one id per phase name, -1 = none
+# (operator / policy data, or no hub meta), -2 = navigation failed. The table is also written to g1iv_provenance.json.
+PHASE_ID = {"nav_wait": 0, "walk": 1, "pulse": 2, "pre_walk": 3, "settle": 4, "nav_done": 5, "wait": 6, "engage": 7,
+            "raise": 8, "pregrasp": 9, "approach": 10, "close": 11, "lift": 12, "hold": 13, "done": 14, "nav_failed": -2}
+
+
+def _yaw(q_wxyz) -> float:
+    w, x, y, z = q_wxyz
+    return float(np.arctan2(2.0 * (w * z + x * y), 1.0 - 2.0 * (y * y + z * z)))
+
+
+def frame_from_row(d: Path, row: dict, cams: list[str], multi_obj: bool = False) -> dict:
     from PIL import Image
 
     o, a, ev, tel = row["obs"], row["action"], row.get("eval", {}), row.get("teleop", {})
@@ -136,7 +157,12 @@ def frame_from_row(d: Path, row: dict, cams: list[str]) -> dict:
           "observation.wall_time": np.array([row["wall_time"]], np.float64),
           "eval.object_pos_w": np.asarray(ev.get("object_pos_w", [np.nan] * 3), np.float32),
           "eval.contact_force_total": np.array([ev.get("contact_force_total", np.nan)], np.float32),
-          "eval.fallen": np.array([1.0 if ev.get("fallen") else 0.0], np.float32)}
+          "eval.fallen": np.array([1.0 if ev.get("fallen") else 0.0], np.float32),
+          "eval.robot_pose_w": np.asarray(list(o["base_pos_w"][:2]) + [_yaw(o["base_quat_w"])], np.float32),
+          "eval.phase": np.array([PHASE_ID.get(tel.get("phase"), -1)], np.int64)}
+    if multi_obj:
+        fr["eval.all_object_pos_w"] = np.asarray(
+            [v for n in OBJ_ORDER for v in (ev.get("objects") or {}).get(n, [np.nan] * 3)], np.float32)
     for alias in cams:
         with Image.open(d / o["image_files"][alias]) as im:
             fr[f"observation.images.{CAM_KEYS[alias]}"] = np.asarray(im.convert("RGB"))
@@ -213,7 +239,9 @@ def main():
     if not {"head", "left_wrist", "right_wrist"} <= set(cams):
         sys.exit(f"need head + both wrist cameras, have {cams}")
     print("cameras:", {c: CAM_KEYS[c] for c in cams})
-    ds = LeRobotDataset.create(repo_id=f"local/{a.name}", fps=fps, features=features(h, w, cams), root=root,
+    multi_obj = all(len(json.loads((d / "meta.json").read_text()).get("objects_xy") or {}) > 1 for d, _ in eps)
+    print("all cylinder positions (eval.all_object_pos_w):", multi_obj)
+    ds = LeRobotDataset.create(repo_id=f"local/{a.name}", fps=fps, features=features(h, w, cams, multi_obj), root=root,
                                robot_type="unitree_g1_29dof_inspire_sim", use_videos=True)
     prov = []
     t0 = time.time()
@@ -222,7 +250,7 @@ def main():
         rows = [json.loads(x) for x in (d / "steps.jsonl").read_text().splitlines() if x.strip()]
         ts0 = rows[0]["sim_time"]
         for row in rows:
-            ds.add_frame(frame_from_row(d, row, cams), task=meta["instruction"], timestamp=float(row["sim_time"] - ts0))
+            ds.add_frame(frame_from_row(d, row, cams, multi_obj), task=meta["instruction"], timestamp=float(row["sim_time"] - ts0))
         ds.save_episode()
         prov.append({"episode_index": len(prov), "raw_dir": str(d), "episode_id": meta["episode_id"], "source": meta["source"],
                      "is_smoke_data": meta.get("is_smoke_data"), "outcome": meta.get("outcome"), "frames": len(rows),
@@ -245,7 +273,7 @@ def main():
         {"converter": "src/g1iv_data/convert_lerobot.py", "lerobot": lerobot.__version__, "codebase_version": CODEBASE_VERSION,
          "vcodec": a.vcodec, "fps": fps, "episodes": prov, "skipped": skipped, "seconds": time.time() - t0,
          "action_definition": "targets applied by the simulator during the step following the observation",
-         "state_order": MOTORS}, indent=1))
+         "state_order": MOTORS, "phase_ids": PHASE_ID}, indent=1))
     print(f"dataset -> {root}  episodes={len(prov)}")
 
 

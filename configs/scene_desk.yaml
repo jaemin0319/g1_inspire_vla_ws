@@ -16,6 +16,19 @@ robot:
   reset_noise_xy: [0.0, 0.0]  # uniform +/- range applied at reset (for stop-pose experiments later)
   reset_noise_yaw_deg: 0.0
   debug_fix_base: false       # true = DEBUG ONLY: pin the pelvis (never use for walking/recording)
+  # 2026-11-24 user request: the hands passed through the thighs while walking (no robot self-collisions in the
+  # official articulation, and the official default arm pose holds the Inspire hands right beside the thighs).
+  # 2026-11-24 (v4 data on): both defaults below switched on; v1-v3 data and evaluations used false / null.
+  hand_body_collision: true   # true: hand side (fingers, hand base, wrist links) <-> pelvis/waist/torso/legs and
+                              # left hand <-> right hand collide; every other robot link pair stays without contact
+                              # (src/g1iv_sim/desk_task.py filter_self_collisions)
+  reset_arm_q: [0.35, 0.35, 0.0, 0.87, 0.0, 0.0, 0.0, 0.35, -0.35, 0.0, 0.87, 0.0, 0.0, 0.0]
+                              # arm pose of every reset, held by the arm PD until the arm is commanded (so also while
+                              # walking): left 7 + right 7 (shoulder pitch/roll/yaw, elbow, wrist roll/pitch/yaw, rad);
+                              # null = official default [0.35, +-0.18, 0, 0.87, 0, 0, 0]. Keep configs/teleop.yaml
+                              # arm.home_q equal to it (tools/run_act_policy.py holds home_q across the reset).
+                              # This walking pose: shoulders 0.17 rad wider than the official one, elbows unchanged;
+                              # hand-thigh clearance ~9 cm standing, >= 3.6 cm while walking (FK estimate, 2026-11-24)
 
 hand_appearance:
   # Only for robot.hand_model = inspire_dfx_official (the RH56E2 hands carry their own colours, hand_colorway).

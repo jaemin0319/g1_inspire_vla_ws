@@ -104,7 +104,14 @@ class LocoArbiter:
                 self.v[:] = 0.0
                 self.reason = "xr_stale"
             else:
-                self.v = self._xr_target.copy()
+                c = self.cfg["xr"]
+                if c.get("accel"):       # soft gate (opt-in): ramp towards the stick target
+                    tgt, dec = self._xr_target, float(c.get("decel", c["accel"]))
+                    acc = np.where(np.abs(tgt) > np.abs(self.v), float(c["accel"]), dec)
+                    acc = np.where(np.sign(tgt) * np.sign(self.v) < 0, dec, acc)
+                    self.v = self.v + np.clip(tgt - self.v, -acc * dt, acc * dt)
+                else:
+                    self.v = self._xr_target.copy()
                 self.reason = "xr"
         self.v = np.clip(self.v, self.lo, self.hi)
         self.v[np.abs(self.v) < 1e-4] = 0.0

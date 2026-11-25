@@ -18,6 +18,8 @@ import math
 import sys
 from collections import Counter
 from pathlib import Path
+import os as _os
+VER = _os.environ.get("G1IV_EVAL_VER", "v3")   # model version label in the eval folder names
 
 root, out = Path(sys.argv[1]), Path(sys.argv[2])
 n_expect = int(sys.argv[3]) if len(sys.argv) > 3 else 30
@@ -35,10 +37,10 @@ def wilson(k: int, n: int, z: float = 1.96):
 
 
 rows, per = [], {}
-for d in sorted(root.glob("*_v3_*_nas25_far")):
+for d in sorted(root.glob(f"*_{VER}_*_nas25_far")):
     if "_incomplete_" in d.name or not (d / "summary.jsonl").is_file():
         continue
-    step = d.name.split("_v3_")[1].split("_")[0]
+    step = d.name.split(f"_{VER}_")[1].split("_")[0]
     eps = [json.loads(x) for x in (d / "summary.jsonl").read_text().splitlines() if x.strip()]
     if len(eps) < n_expect:
         print(f"skip {d.name}: {len(eps)} < {n_expect} episodes")
@@ -116,7 +118,7 @@ ax.set_xticklabels([f"{int(v)}k" for v in x])
 ax.set_ylim(0, 100)
 ax.set_ylabel("success rate (%)", color=INK2)
 ax.set_xlabel("training step", color=INK2)
-ax.set_title(f"ACT v3 (wide random starts): closed-loop success per checkpoint, {n_expect} episodes each",
+ax.set_title(f"ACT {VER} (wide random starts): closed-loop success per checkpoint, {n_expect} episodes each",
              color=INK, fontsize=10, loc="left")
 ax.grid(axis="y", color=GRID, lw=0.8)
 for s in ("top", "right"):
@@ -124,7 +126,7 @@ for s in ("top", "right"):
 for s in ("left", "bottom"):
     ax.spines[s].set_color(GRID)
 ax.tick_params(colors=INK2)
-fig.text(0.01, 0.01, "whiskers: Wilson 95 % interval; same 30 random starts for every checkpoint", color=INK2, fontsize=8)
+fig.text(0.01, 0.01, f"whiskers: Wilson 95 % interval; same {n_expect} random starts for every checkpoint", color=INK2, fontsize=8)
 fig.tight_layout(rect=(0, 0.03, 1, 1))
 fig.savefig(out / "success_rate.png", facecolor=SURF)
 print("wrote", out)

@@ -16,7 +16,9 @@ sudo 없이 작업공간 안에만 설치합니다(micromamba만 `~/.local/bin`)
 공개 데이터셋(이 작업공간으로 자동 생성, LeRobot v2.1 + GR00T `modality.json`):
 [단일 원통 15개](https://huggingface.co/datasets/jammin0319/g1_inspire_walk_grasp_desk065_scripted_v1) ·
 [세 원통 색 지정 90개](https://huggingface.co/datasets/jammin0319/g1_inspire_walk_pick_3color_desk065_scripted_v1) ·
-[먼 출발 보행·파지 55개](https://huggingface.co/datasets/jammin0319/g1_inspire_walk_far_grasp_desk065_scripted_v2)
+[먼 출발 보행·파지 55개](https://huggingface.co/datasets/jammin0319/g1_inspire_walk_far_grasp_desk065_scripted_v2) ·
+[넓은 무작위 출발 보행·파지 100개](https://huggingface.co/datasets/jammin0319/g1_inspire_walk_wide_grasp_desk065_scripted_v3) ·
+[같은 조건 + 손↔몸 충돌·보행 팔 자세 100개](https://huggingface.co/datasets/jammin0319/g1_inspire_walk_wide_grasp_desk065_scripted_v4)
 
 - **현재 상태는 [docs/SETUP_REPORT.md](docs/SETUP_REPORT.md)부터 보세요.** 각 항목을 실제로 실행했는지, 모의 입력인지 실제 PICO인지는 [docs/VALIDATION.md](docs/VALIDATION.md)에 구분해 두었습니다.
 

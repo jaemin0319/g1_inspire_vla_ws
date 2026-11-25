@@ -143,6 +143,17 @@ class G1IVExt:
         self.i_hand = [idx[n] for n in HAND_NAMES]
         self.i_hand_all = [idx[n] for n in HAND_ALL_NAMES]
         self.i_sdk29 = [idx[n] for n in SDK29_NAMES]
+        # arm pose of every reset (scene_desk.yaml robot.reset_arm_q; None = the official default joint pose)
+        ra = self.scn["robot"].get("reset_arm_q")
+        if ra is not None and len(ra) != len(ARM_NAMES):
+            raise ValueError(f"[g1iv] robot.reset_arm_q needs {len(ARM_NAMES)} values (left 7 + right 7), got {ra}")
+        self.reset_arm_q = None if ra is None else torch.tensor([float(v) for v in ra], dtype=torch.float32)
+        print(f"[g1iv] reset arm pose: {'official default' if ra is None else ra}; "
+              f"hand <-> body collision: {g1iv_tasks.HAND_BODY_COLLISION}")
+        # contact materials as PhysX uses them (2026-11-24 user request: is the rubber friction of the finger pads in?)
+        self.friction_info = self._friction_info(env)
+        print(f"[g1iv] friction (PhysX shape materials, static/dynamic/restitution): {json.dumps(self.friction_info)}",
+              flush=True)
         # bodies reported as evaluation ground truth only (never a policy observation)
         bnames = list(self.robot.data.body_names)
         self.i_body_eval = {k: bnames.index(n) for k, n in (("right_hand", "right_hand_base_link"),
@@ -221,7 +232,12 @@ class G1IVExt:
                 print(f"[g1iv] observer camera period not set: {e}")
         # Deterministic start: the official provider uses a 0 arm target until the first rt/lowcmd arrives
         # (and stale /dev/shm content from a previous run otherwise). Seed default arm pose / OPEN / zero walk.
-        self._reset_cmd_shm(provider, self.robot.data.default_joint_pos[0])
+        jp0 = self._reset_joint_pos()
+        if self.reset_arm_q is not None:   # start in the reset arm pose too (arms only; not only after the first reset)
+            qa = jp0[:, self.i_arm]
+            self.robot.write_joint_state_to_sim(qa, torch.zeros_like(qa), joint_ids=self.i_arm)
+            self.robot.set_joint_position_target(qa, joint_ids=self.i_arm)
+        self._reset_cmd_shm(provider, jp0[0])
         print("[g1iv] DDS project topics up:", topics.T_CONTROL, topics.T_TELEOP_META, topics.T_SIM_STATUS)
 
     def on_step(self, env):
@@ -733,7 +749,7 @@ class G1IVExt:
         rs[0, 7:] = 0.0
         robot.write_root_pose_to_sim(rs[:, :7])
         robot.write_root_velocity_to_sim(rs[:, 7:])
-        jp, jv = robot.data.default_joint_pos.clone(), robot.data.default_joint_vel.clone()
+        jp, jv = self._reset_joint_pos(), robot.data.default_joint_vel.clone()
         robot.write_joint_state_to_sim(jp, jv)
         robot.set_joint_position_target(jp)
         robot.reset()
@@ -776,6 +792,14 @@ class G1IVExt:
         print(f"[g1iv] full reset #{self.reset_count}: robot {rs[0, :3].tolist()} yaw {math.degrees(yaw):.1f} deg "
               f"target {self.target}")
 
+    def _reset_joint_pos(self) -> torch.Tensor:
+        """Joint pose of a reset: the official default, arms replaced by robot.reset_arm_q when set. The official
+        default_joint_pos itself is left alone (the locomotion policy observes joint angles relative to it)."""
+        jp = self.robot.data.default_joint_pos.clone()
+        if self.reset_arm_q is not None:
+            jp[:, self.i_arm] = self.reset_arm_q.to(jp.device)
+        return jp
+
     def _reset_cmd_shm(self, p, default_q):
         """Overwrite the last DDS commands kept in shared memory so the sim does not jump back to a
         stale arm/hand target before the hub publishes its own reset targets."""
@@ -811,6 +835,42 @@ class G1IVExt:
                           "render_dist": c.render.dist, "clipping_range": list(c.clipping)}
         return out
 
+    def _friction_info(self, env) -> dict:
+        """Per-shape material values read back from PhysX: hand side links (fingers, hand base, wrists), the other robot
+        links and the target cylinder, plus the combine modes of the scene default material and the cylinder material."""
+        out: dict = {}
+        try:
+            props = self.robot.root_physx_view.get_material_properties()[0]          # (shapes, 3) of env 0
+            link_paths = self.robot.root_physx_view.link_paths[0]
+            sim_view = self.robot._physics_sim_view                                 # noqa: SLF001
+            groups: dict = {"hand_side": set(), "other_robot": set()}
+            k = 0
+            for lp in link_paths:
+                n = sim_view.create_rigid_body_view(lp).max_shapes
+                name = lp.rsplit("/", 1)[-1]
+                key = "hand_side" if g1iv_tasks.HAND_SIDE_LINK_RE.fullmatch(name) else "other_robot"
+                for j in range(k, k + n):
+                    groups[key].add(tuple(round(float(v), 4) for v in props[j].tolist()))
+                k += n
+            out = {g: sorted(v) for g, v in groups.items()}
+            out["robot_shapes"] = int(k)
+        except Exception as e:  # noqa: BLE001
+            out["robot_error"] = repr(e)[:200]
+        try:
+            op = env.scene["object"].root_physx_view.get_material_properties()[0]
+            out["cylinder"] = sorted({tuple(round(float(v), 4) for v in r.tolist()) for r in op})
+        except Exception as e:  # noqa: BLE001
+            out["cylinder_error"] = repr(e)[:200]
+        pm = self.env_cfg.sim.physics_material
+        out["default_material"] = {"static": pm.static_friction, "dynamic": pm.dynamic_friction,
+                                   "friction_combine": pm.friction_combine_mode}
+        try:
+            om = env.scene["object"].cfg.spawn.physics_material
+            out["cylinder_material_combine"] = om.friction_combine_mode
+        except Exception:  # noqa: BLE001
+            pass
+        return out
+
     def _static_meta(self) -> dict:
         import isaacsim  # noqa: F401
 
@@ -830,6 +890,9 @@ class G1IVExt:
             "hand_all_names": HAND_ALL_NAMES, "leg_names": LEG_NAMES, "waist_names": WAIST_NAMES,
             "sdk29_names": SDK29_NAMES, "cameras": {self.alias.get(c, c): c for c in self.cams},
             "camera_rig": self._camera_rig_meta(), "lens_distortion": getattr(self, "lens_status", None),
+            "hand_body_collision": g1iv_tasks.HAND_BODY_COLLISION, "self_collision_filter": g1iv_tasks.SELF_COLLISION_LOG,
+            "reset_arm_q": None if self.reset_arm_q is None else self.reset_arm_q.tolist(),
+            "friction": getattr(self, "friction_info", None),
             "camera_resolution": [int(self.scn["cameras"]["width"]), int(self.scn["cameras"]["height"])],
             "control_dt": self.control_dt, "physics_dt": float(self.env_cfg.sim.dt), "decimation": int(self.env_cfg.decimation),
             "sim_device": str(self.env.device), "scene_cfg": self.scn, "record_cfg": self.rcfg,

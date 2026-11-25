@@ -31,6 +31,7 @@ def main():
     ap.add_argument("--outcome", default="undetermined", choices=list(topics.OUTCOMES))
     ap.add_argument("--robot-pose", nargs=3, type=float)
     ap.add_argument("--object-xy", nargs=2, type=float)
+    ap.add_argument("--objects-xy", nargs="+", help="reset: NAME=X,Y per cylinder, e.g. red=1.02,0.05 blue=1.02,-0.45")
     ap.add_argument("--seed", type=int)
     ap.add_argument("--target", help="reset: cylinder to pick by colour name (scene_desk.yaml extra_objects; default "
                                      "the primary one); --object-xy then moves this one")
@@ -77,6 +78,8 @@ def main():
             kw["robot_pose"] = a.robot_pose
         if a.object_xy:
             kw["object_xy"] = a.object_xy
+        if a.objects_xy:
+            kw["objects_xy"] = {n: [float(v) for v in xy.split(",")] for n, xy in (s.split("=", 1) for s in a.objects_xy)}
         if a.seed is not None:
             kw["seed"] = a.seed
         if a.target:

@@ -393,7 +393,7 @@ class Hub:
             self.loco.feed_keys(ks)
         elif self.loco.source == "xr" and fr is not None:
             self.loco.feed_xr(fr.stick[0], fr.stick[1], valid=ok)
-        cmd = self.loco.step(self.dt)
+        cmd = self.loco.step(self.dt_sim)    # ramps in simulator time
         with self._loco_lock:
             self._loco_cmd = cmd
             self._loco_update_mono = time.monotonic()
@@ -406,7 +406,8 @@ class Hub:
                 "trigger": list(fr.trig) if fr else None, "arm_ik_q": (sol_q.tolist() if sol_q is not None else None),
                 "arm_goal_q": self.q_goal.tolist(), "arm_sent_q": self.q_sent.tolist(), "ik_ok": self.ik_ok,
                 "ik_err": self.ik_err, "targets": {s: targets[s][:3, 3].tolist() for s in targets},
-                "loco_raw": self.loco.raw, "loco_sent": cmd, "loco_reason": self.loco.reason, "events": events}
+                "loco_raw": self.loco.raw, "loco_sent": cmd, "loco_reason": self.loco.reason, "events": events,
+                "phase": (fr.raw.get("phase") if fr else None)}
         self.pub_meta.Write(self.String_(data=topics.dumps(meta)))
         self.trace.append({"t": now, "ok": ok, "engaged": self.engaged, "q_sent": self.q_sent.tolist(),
                            "q_meas": q_meas.tolist(), "dq_sent_max": float(np.max(np.abs(self.q_sent - q_prev))), "dt_sim": self.dt_sim,

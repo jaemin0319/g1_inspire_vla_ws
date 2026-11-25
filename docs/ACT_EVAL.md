@@ -148,6 +148,7 @@ scripts/run_act_eval.sh stop-server ; scripts/stop_all.sh      # 정리
   - 전문가(55개): 원통−골반 (33.6, −11.0) ± (1.4, 0.8), 오른손−원통 (−16.8, −5.8) ± 0.1. 손이 늘 원통 같은 자리를 쥠.
   - 정책(30k–70k, 실행 25, 손을 오므린 67회): 원통−골반 y 평균 −9.6, 표준편차 3.3. 전문가보다 1.4 cm 몸 정면 쪽이고 4배 넓게 퍼짐. 앞뒤 x는 33.7 ± 1.9로 전문가와 같음.
   - **팔은 좌우 서는 자리 오차의 47%만 보정**(손−골반 y를 원통−골반 y에 회귀하면 기울기 0.47, 상관 0.90). 앞뒤는 68%.
+    - 2026-11-23 재계산(`experiments/act_walk/compensation.py`, v2 30k–70k 실행 25 폴더 8개, 손을 오므린 81회): 좌우 0.53(상관 0.95), 앞뒤 0.73(상관 0.91). 0.47·0.68은 저장되지 않은 계산이라 재현되지 않음(손·손목 기준, 30k–40k·30k–70k 묶음 모두 0.51–0.57). 이후 비교 기준은 스크립트 값.
   - 원통−골반 y별 성공:
 
     | y 구간 | 성공 |
@@ -252,3 +253,21 @@ scripts/run_act_eval.sh stop-server ; scripts/stop_all.sh      # 정리
 - 삭제한 데이터셋: g1iv_store의 raw·processed·hf_upload, 작업공간 `data/processed`·`data/smoke`(총 21 GB). 데이터셋 3종은 Hub에 공개되어 있습니다.
 - 남긴 것: 정책 평가 녹화(`g1iv_store/policy_eval`, `data/policy_eval`)와 `data/reference`(Unitree·Inspire 참고 자료). 학습용 데이터셋이 아니라서 남겼습니다.
 - 모델 업로드: Hub에 없던 `jammin0319/act_g1_walk_far_v2`(10개 체크포인트)와 `jammin0319/act_g1_walk_grasp_desk065_ep15`(5개)를 비공개로 올렸습니다. 최근 모델 저장소 관례를 따랐고, 업로드에는 so101 `tools/hub_sync_checkpoints.py --once`를 썼습니다. 원격 해시가 로컬과 일치하는 것을 확인한 뒤 로컬에서 지웠고, 모델 카드도 올렸습니다.
+- v3 데이터셋(2026-11-23, 사용자 요청 "수집 끝나면 되는대로 허깅페이스에 업로드"): 녹화 131개 → 필터 통과 100개(51,804프레임, 모두 한 번에 걸어감). 공개 `jammin0319/g1_inspire_walk_wide_grasp_desk065_scripted_v3`(LeRobot v2.1, 카드 `docs/hf_cards/walk_wide_grasp_desk065_scripted_v3.md`), 검증 VALIDATION W20. 학습 `act_g1_walk_wide_v3`는 2026-11-23 13:56 시작(학습 90 / 평가 10 에피소드, 0.46 s/step).
+- **계획 변경(2026-11-23 15:1x, 사용자 요청):** "체크포인트 2만으로 하고, 매 체크포인트마다 평가해서 9개 화면으로 분할해서 두 번 시연 재생해서 총 18번 테스트, 모델별 성공률 위쪽에 기재. 학습은 20만까지. 테스트는 4060, 5060 Ti는 계속 학습."
+  - **학습:** 1만 스텝 체크포인트(15:17 저장)에서 이어 학습합니다. so101 `scripts/train_resume.sh act_g1_walk_wide_v3 200000 --wandb --save_freq=20000`, 출력 폴더는 `/mnt/isaac/so101_ws/outputs/train/act_g1_walk_wide_v3` → `/home/jammin/g1iv_store/train/act_g1_walk_wide_v3` 심볼릭 링크입니다. 가중치·옵티마이저·데이터 순서·W&B run oz6pyvpq를 그대로 이어받습니다. ACT는 고정 lr이라 총 스텝을 늘려도 학습 경로가 같습니다. 0–10k 로그는 `act_g1_walk_wide_v3.part1_0-10k.log`, 15:19 재개 후 2.12 step/s로 11-24 16시쯤 끝날 예정입니다.
+  - **평가:** `/home/jammin/g1iv_store/v3_eval_ckpts.sh`(로그 `logs/v3_eval_ckpts.log`)가 2만 스텝마다(20k–200k) 4060에서 시뮬과 정책 서버를 띄워 18회 실행합니다. 출발 18개는 seed 20261124로 뽑아 모든 체크포인트에 같게 쓰고, 실행 25, 최대 1000프레임입니다. 처음 계획한 체크포인트당 30회 평가(`v3_pipeline.sh eval`)는 쓰지 않습니다.
+  - **영상:** `~/다운로드/g1_act_v3_eval/g1_act_v3_<k>k_eval18.mp4`. 헤드 카메라 3×3 화면을 1회차(시연 1–9)와 2회차(10–18)로 이어 붙였고, 칸마다 O/X를 표시합니다. 머리글에는 이 모델의 성공률과 지금까지 체크포인트별 성공률을 적습니다(`eval_grid18.py`).
+  - **데이터:** `/home/jammin/g1iv_store/eval_v3/`(`checkpoints.csv`, `episodes.csv`, `summary.json`, `success_rate.png`)를 체크포인트마다 갱신하고, 같은 폴더의 `success_rate_by_checkpoint.csv/png`에도 복사합니다.
+
+### 7.x 외부 수정안 9가지 검토·적용 (2026-11-23, 브랜치 `g1iv-9fixes`, 커밋 안 함)
+
+- 받은 패치 `g1iv_9fixes.patch`(67e1c32 기준)를 검토함. 평가 중인 시뮬(`src/g1iv_sim/ext.py`)·실행기(`tools/run_act_policy.py`)와 far 설정은 빼고 적용함.
+- 바꿔 적용한 것
+  - 평가 기록의 몸 방향·속도(3번): 실행기·시뮬을 고치지 않음. 평가 원본 녹화 `arrays.npz`에 이미 `obs/base_quat_w`·`obs/base_lin_vel_b`가 있으므로 `experiments/act_walk/eval_summary.py`가 거기서 읽음(녹화 프레임 j = trace 프레임 j+1, 위치 오차 0으로 확인). 과거 평가에도 소급됨. 패치대로면 옛 시뮬 + 새 실행기 조합에서 `np.asarray(None, float)`로 평가가 멈춤.
+  - `t_close` 0.6(9번): v3는 `scripted_walk_wide_grasp_desk065.yaml`을 쓰므로 far 설정 수정은 효과가 없고 v2 재현성만 깨짐 → 설정은 그대로 두고 수집 때 `--hub-arg=--plan-set --hub-arg=t_close=0.6`.
+  - 정지 위치 흩뜨리기(4번): 기준 `stand_rel`·`goal_yaw_deg`를 plan 파일(+ `--plan-set`)에서 읽어 그 값에 더함.
+  - 변환(6·7번): 단계 번호를 단계마다 따로(표는 `g1iv_provenance.json`의 `phase_ids`), `eval.all_object_pos_w`는 모든 에피소드에 원통이 2개 이상일 때만(단일 원통이면 전부 NaN이라).
+- 남은 것(11-24 평가·학습 끝난 뒤): `ext.py`(단계 필드, `objects_xy` 리셋), `run_act_policy.py`(`--vx-signal`, `--loco-accel/decel`).
+- 검사: py_compile, 단위 테스트 18개 통과(`PYTEST_DISABLE_PLUGIN_AUTOLOAD=1`, ROS 플러그인 때문), 소프트 게이트 0.2 s에 0.3 m/s·정지 후 0.2 s에 0, 꺼짐이면 그대로.
+- v2·v3 평가에서 본 것: 팔 시작 순간 골반 속도 0.003–0.007 m/s, yaw 평균 3.2–3.5°. 정지 직후 흔들림은 작음 → 소프트 게이트(2번) 실험은 우선순위 낮음.

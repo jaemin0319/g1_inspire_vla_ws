@@ -25,9 +25,10 @@ arm:
   max_joint_step_on_engage_rad: 0.02
   home_on_disengage: false    # false = hold last valid target when disengaged
   ik_fail_policy: hold_last_valid   # hold_last_valid  (logged)
-  home_q:                     # official G1_29 default arm pose (shoulder pitch/roll/yaw, elbow, wrist r/p/y)
-    left:  [0.35, 0.18, 0.0, 0.87, 0.0, 0.0, 0.0]
-    right: [0.35, -0.18, 0.0, 0.87, 0.0, 0.0, 0.0]
+  home_q:                     # = configs/scene_desk.yaml robot.reset_arm_q (shoulder pitch/roll/yaw, elbow, wrist r/p/y);
+                              # 2026-11-24: shoulder roll 0.18 -> 0.35 (hands off the thighs while walking; official 0.18)
+    left:  [0.35, 0.35, 0.0, 0.87, 0.0, 0.0, 0.0]
+    right: [0.35, -0.35, 0.0, 0.87, 0.0, 0.0, 0.0]
 
 hands:
   preset_file: configs/hands_inspire.yaml
@@ -64,6 +65,9 @@ loco:
     vy_max: 0.5
     wz_max: 1.57
     stale_timeout_s: 0.3
+    # soft gate (opt-in, uncomment): ramp the stick command in simulator time; re-tune walk.stop_dist_m after enabling
+    # accel: 1.5
+    # decel: 4.0
 
 buttons:
   # Logical action -> controller element. Verify on the real PICO with scripts/run_pico_teleop.sh --diag.

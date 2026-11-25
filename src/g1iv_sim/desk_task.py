@@ -17,6 +17,7 @@ from __future__ import annotations
 import json
 import math
 import os
+import re
 from collections.abc import Callable
 
 import gymnasium as gym
@@ -162,17 +163,75 @@ if HAND["usd"]:
 print(f"[g1iv] robot USD: {_robot_cfg.spawn.usd_path} (hand model {HAND['name']})")
 if _r.get("debug_fix_base", False):
     _robot_cfg.spawn.articulation_props.fix_root_link = True  # DEBUG ONLY (see configs/scene_desk.yaml)
+
+# Hand <-> body collisions (scene_desk.yaml robot.hand_body_collision; 2026-11-24 user request: the hands passed through
+# the thighs while walking). The official articulation has self-collisions off, so no robot link touches another one.
+# On: self-collisions on, then every robot link pair is filtered again (UsdPhysics.FilteredPairsAPI) except
+#   hand side (fingers, hand base, wrist links) <-> body (pelvis, waist, torso, legs)  and  left hand <-> right hand.
+# Arm <-> arm, arm <-> body, leg <-> leg and finger <-> finger pairs stay as before (no contact).
+HAND_BODY_COLLISION = bool(_r.get("hand_body_collision", False))
+HAND_SIDE_LINK_RE = re.compile(r"(?P<s>L|R)_.+|(?P<side>left|right)_(hand_base|wrist_(roll|pitch|yaw))_link")
+BODY_LINK_RE = re.compile(r"pelvis.*|waist_.+_link|torso_link|(left|right)_(hip_(pitch|roll|yaw)|knee|ankle_(pitch|roll))_link")
+SELF_COLLISION_LOG: dict = {}
+if HAND_BODY_COLLISION:
+    _robot_cfg.spawn.articulation_props.enabled_self_collisions = True
+
+
+def _hand_side(name: str) -> str | None:
+    m = HAND_SIDE_LINK_RE.fullmatch(name)
+    if m is None:
+        return None
+    return "left" if (m.group("s") or "") == "L" or m.group("side") == "left" else "right"
+
+
+def filter_self_collisions(root) -> dict:
+    """FilteredPairsAPI on the robot links so that, with articulation self-collisions on, only hand <-> body and
+    left hand <-> right hand pairs can touch (see HAND_BODY_COLLISION). Authored before physics starts."""
+    from pxr import Usd, UsdPhysics
+
+    bodies = [p for p in Usd.PrimRange(root) if p.HasAPI(UsdPhysics.RigidBodyAPI)]
+    names = [b.GetName() for b in bodies]
+    side = [_hand_side(n) for n in names]
+    body = [BODY_LINK_RE.fullmatch(n) is not None for n in names]
+
+    def collide(i, j):
+        if side[i] and side[j]:
+            return side[i] != side[j]                      # left hand <-> right hand
+        return bool((side[i] and body[j]) or (body[i] and side[j]))
+
+    allowed = filtered = 0
+    for i, b in enumerate(bodies):
+        others = []
+        for j in range(i + 1, len(bodies)):
+            if collide(i, j):
+                allowed += 1
+            else:
+                others.append(bodies[j].GetPath())
+        if others:
+            UsdPhysics.FilteredPairsAPI.Apply(b).CreateFilteredPairsRel().SetTargets(others)
+            filtered += len(others)
+    return {"bodies": len(bodies), "allowed_pairs": allowed, "filtered_pairs": filtered,
+            "hand_side_links": [n for n, s in zip(names, side) if s], "body_links": [n for n, k in zip(names, body) if k]}
+
+
 RIG_HW_LOG: dict = {}
-if RIG.get("use_rig", True):
+if RIG.get("use_rig", True) or HAND_BODY_COLLISION:
     _official_robot_spawn = _robot_cfg.spawn.func
 
     def _spawn_robot_with_camera_hardware(prim_path, cfg, *args, **kwargs):
         """Official USD spawn + camera hardware of the rig (before physics starts; visuals only, and the official
-        asset's tall camera-base bracket removed). See camera_rig.apply_rig_hardware."""
+        asset's tall camera-base bracket removed; see camera_rig.apply_rig_hardware) + the hand <-> body collision
+        filter (HAND_BODY_COLLISION)."""
         prim = _official_robot_spawn(prim_path, cfg, *args, **kwargs)
         for root in sim_utils.find_matching_prims(prim_path):
-            RIG_HW_LOG[str(root.GetPath())] = apply_rig_hardware(root, RIG, ws_path("assets/camera_rig"))
-        print(f"[g1iv] camera hardware: {json.dumps(RIG_HW_LOG)[:400]}")
+            if RIG.get("use_rig", True):
+                RIG_HW_LOG[str(root.GetPath())] = apply_rig_hardware(root, RIG, ws_path("assets/camera_rig"))
+            if HAND_BODY_COLLISION:
+                SELF_COLLISION_LOG[str(root.GetPath())] = filter_self_collisions(root)
+        if RIG.get("use_rig", True):
+            print(f"[g1iv] camera hardware: {json.dumps(RIG_HW_LOG)[:400]}")
+        if HAND_BODY_COLLISION:
+            print(f"[g1iv] hand <-> body collision on: {json.dumps(SELF_COLLISION_LOG)}")
         return prim
 
     _robot_cfg.spawn.func = _spawn_robot_with_camera_hardware

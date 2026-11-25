@@ -57,6 +57,7 @@ def main() -> int:
     ap.add_argument("--overwrite", action="store_true")
     ap.add_argument("--loco-loss-weight", type=float, default=1.0,
                     help="effective L1 weight of the loco dims (std of action[26:29] in stats.json divided by this)")
+    ap.add_argument("--vx-signal", action="store_true", help="action vx -> {-1, 0, 1} (|vx| > 0.05 -> sign)")
     a = ap.parse_args()
 
     from lerobot.datasets.compute_stats import aggregate_stats
@@ -99,7 +100,10 @@ def main() -> int:
         loco = np.stack(df["action.loco_cmd"].values).astype(np.float32)
         old_action.append(act)
         old_loco.append(loco)
-        df["action"] = list(np.concatenate([act, loco[:, :3]], axis=1))
+        lo = loco[:, :3].copy()
+        if a.vx_signal:
+            lo[:, 0] = np.where(np.abs(lo[:, 0]) > 0.05, np.sign(lo[:, 0]), 0.0)
+        df["action"] = list(np.concatenate([act, lo], axis=1))
         df = df.drop(columns=[c for c in DROP if c in df.columns])
         df.to_parquet(pq, index=False)
 
@@ -139,14 +143,18 @@ def main() -> int:
     # 5) checks: values, stats consistency with the source, loadable sample
     ds = LeRobotDataset(repo_id=repo_id, root=work)
     act_new = np.stack(ds.hf_dataset.with_format("numpy")["action"])
-    ref = np.concatenate([np.concatenate(old_action), np.concatenate(old_loco)[:, :3]], axis=1)
+    ref_loco = np.concatenate(old_loco)[:, :3].copy()
+    if a.vx_signal:
+        ref_loco[:, 0] = np.where(np.abs(ref_loco[:, 0]) > 0.05, np.sign(ref_loco[:, 0]), 0.0)
+    ref = np.concatenate([np.concatenate(old_action), ref_loco], axis=1)
     assert act_new.shape == (info0["total_frames"], 29), act_new.shape
     assert np.array_equal(act_new, ref), "action values changed"
     s_old = json.loads((src / "meta/stats.json").read_text())
     for f in ("min", "max", "mean", "std"):
         got = np.asarray(ds.meta.stats["action"][f])
         np.testing.assert_allclose(got[:26], np.asarray(s_old["action"][f]), rtol=1e-4, atol=1e-5)
-        np.testing.assert_allclose(got[26:], np.asarray(s_old["action.loco_cmd"][f])[:3], rtol=1e-4, atol=1e-5)
+        k0 = 27 if a.vx_signal else 26          # vx stats change with --vx-signal
+        np.testing.assert_allclose(got[k0:], np.asarray(s_old["action.loco_cmd"][f])[k0 - 26:3], rtol=1e-4, atol=1e-5)
     item = ds[0]
     assert item["action"].shape == (29,) and not any(k in item for k in DROP)
     k_loco = float(a.loco_loss_weight)

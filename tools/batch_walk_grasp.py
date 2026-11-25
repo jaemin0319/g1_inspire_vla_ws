@@ -53,6 +53,8 @@ def main() -> int:
     ap.add_argument("--object-x", nargs=2, type=float, default=[0.98, 1.08])
     ap.add_argument("--object-y", nargs=2, type=float, default=[-0.30, -0.10])
     ap.add_argument("--fixed-objects", action="store_true", help="keep every cylinder at its scene position")
+    ap.add_argument("--shuffle-objects", action="store_true",
+                    help="with --targets: put the cylinders on the 3 scene slots in a random order (+-2 cm) per episode")
     ap.add_argument("--targets", help="comma list of cylinder colours (scene_desk.yaml extra_objects), e.g. red,blue,green")
     ap.add_argument("--per-target", type=int, help="with --targets: stop once every colour has this many successes")
     ap.add_argument("--instruction", default="walk to the desk and pick up the red cylinder")
@@ -62,7 +64,23 @@ def main() -> int:
     ap.add_argument("--out", default="logs/checks/auto_walk_grasp/batch.jsonl")
     ap.add_argument("--timeout", type=float, default=600.0, help="wall seconds per episode")
     ap.add_argument("--hub-arg", action="append", default=[], help="extra hub argument (repeatable)")
+    ap.add_argument("--stand-jitter", nargs=3, type=float, default=[0.0, 0.0, 0.0],
+                    help="uniform +/- (along m, cross m, yaw deg) added per episode to the plan's walk.stand_rel / "
+                         "walk.goal_yaw_deg (read from --plan or the --desk plan, with --hub-arg --plan-set overrides); "
+                         "0 = off")
     a = ap.parse_args()
+    stand0 = None
+    if any(a.stand_jitter):
+        from g1iv_common.config import load_config
+        plan = a.plan or (f"configs/scripted_walk_grasp_desk{int(float(a.desk) * 100 + 0.5):03d}.yaml" if a.desk else None)
+        if plan is None:
+            ap.error("--stand-jitter needs --plan or --desk (the plan's stand pose is jittered)")
+        sets = [v.split("=", 1)[1] for v in a.hub_arg if v.startswith("--plan-set=")]
+        sets += [a.hub_arg[k + 1] for k in range(len(a.hub_arg) - 1) if a.hub_arg[k] == "--plan-set"]
+        W = load_config(plan, sets).get("walk") or {}
+        stand0 = [float(W["stand_rel"][0]), float(W["stand_rel"][1]), float(W.get("goal_yaw_deg", 0.0))]
+        print(f"[batch] stand pose jitter +/-{a.stand_jitter} around stand_rel {stand0[:2]}, goal yaw {stand0[2]} deg "
+              f"({plan})", flush=True)
     targets = [t.strip() for t in a.targets.split(",") if t.strip()] if a.targets else []
     if a.per_target and not targets:
         ap.error("--per-target needs --targets")
@@ -78,6 +96,9 @@ def main() -> int:
     for i in range(a.n):
         rp = [float(rng.uniform(*a.robot_x)), float(rng.uniform(*a.robot_y)), float(rng.uniform(*a.robot_yaw))]
         oxy = None if a.fixed_objects else [float(rng.uniform(*a.object_x)), float(rng.uniform(*a.object_y))]
+        so = [0.0, 0.0, 0.0]
+        if any(a.stand_jitter):          # no random draw when off -> earlier seeds reproduce
+            so = [float(rng.uniform(-j, j)) for j in a.stand_jitter]
         target, tmpl_i = None, None
         instruction, task_name = a.instruction, a.task_name
         if targets:
@@ -92,6 +113,13 @@ def main() -> int:
             reset += ["--object-xy", *map(str, oxy)]
         if target:
             reset += ["--target", target]
+        objs = None
+        if a.shuffle_objects and targets:
+            slots = [(1.02, -0.20), (1.02, 0.05), (1.02, -0.45)]          # scene_desk.yaml: red(primary), blue, green
+            perm = rng.permutation(3)
+            objs = {c: [slots[j][0] + float(rng.uniform(-0.02, 0.02)), slots[j][1] + float(rng.uniform(-0.02, 0.02))]
+                    for c, j in zip(("red", "blue", "green"), perm)}
+            reset += ["--objects-xy", *[f"{c}={x:.4f},{y:.4f}" for c, (x, y) in objs.items()]]
         subprocess.run(reset, check=True, capture_output=True, env=env)
         time.sleep(1.0)
         cmd = ["bash", "scripts/run_mock_teleop.sh", "scripted_walk", "--no-console",
@@ -99,6 +127,9 @@ def main() -> int:
                "--instruction", instruction, "--task-name", task_name, *a.hub_arg]
         if target:
             cmd += ["--plan-set", f"expect_target={target}"]
+        if stand0 is not None:
+            cmd += ["--plan-set", f"walk.stand_rel=[{stand0[0] + so[0]:.4f}, {stand0[1] + so[1]:.4f}]",
+                    "--plan-set", f"walk.goal_yaw_deg={stand0[2] + so[2]:.2f}"]
         if a.record:
             cmd.append("--record")
         t0 = time.time()
@@ -122,7 +153,8 @@ def main() -> int:
         n_ok += ok
         if target and ok:
             ok_per[target] += 1
-        row = {"i": i, "seed": a.seed, "robot_pose": rp, "object_xy": oxy, "target": target, "instruction": instruction,
+        row = {"i": i, "seed": a.seed, "robot_pose": rp, "object_xy": oxy, "stand_offset": so, "objects_xy": objs,
+               "target": target, "instruction": instruction,
                "template": tmpl_i, "success": ok, "object_lift_m": res.get("object_lift_m"), "fallen": res.get("fallen"),
                "others_moved_m": res.get("others_moved_m"), "error": res.get("error"), "nav": res.get("nav"),
                "trace": trace, "wall_s": round(time.time() - t0, 1), "plan": a.plan, "recorded": a.record}
